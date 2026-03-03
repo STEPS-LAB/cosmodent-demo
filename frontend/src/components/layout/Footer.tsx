@@ -33,8 +33,8 @@ export function Footer() {
           <div className="col-span-1 sm:col-span-1">
             <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-                <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center group-hover:scale-105 transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full blur-lg opacity-50 sm:group-hover:opacity-75 transition-opacity duration-300" />
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center sm:group-hover:scale-105 transition-all duration-300">
                   <img
                     src="/logo.png"
                     alt="КОСМОДЕНТ"
@@ -42,7 +42,7 @@ export function Footer() {
                   />
                 </div>
               </div>
-              <span className="text-xl sm:text-2xl font-bold text-white group-hover:text-primary-400 transition-colors duration-300">КОСМОДЕНТ</span>
+              <span className="text-xl sm:text-2xl font-bold text-white sm:group-hover:text-primary-400 transition-colors duration-300">КОСМОДЕНТ</span>
             </Link>
             <p className="text-white/70 text-sm leading-relaxed mb-6">
               Сучасна стоматологічна клініка з інноваційними технологіями лікування.
@@ -55,7 +55,7 @@ export function Footer() {
                 <a
                   key={social}
                   href="#"
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-white/70 hover:text-primary-400 hover:bg-primary-500/20 hover:border-primary-500/30 transition-all duration-300 hover:-translate-y-1"
+                  className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-white/70 sm:hover:text-primary-400 sm:hover:bg-primary-500/20 sm:hover:border-primary-500/30 transition-all duration-300 sm:hover:-translate-y-1"
                   aria-label={social}
                 >
                   <span className="text-xs font-semibold uppercase">{social.charAt(0)}</span>
@@ -75,9 +75,9 @@ export function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-white/70 hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
+                    className="text-white/70 sm:hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
                   >
-                    <span className="w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-4 transition-all duration-300 rounded-full" />
+                    <span className="w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 sm:group-hover:w-4 transition-all duration-300 rounded-full" />
                     {item.name}
                   </Link>
                 </li>
@@ -96,9 +96,9 @@ export function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-white/70 hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
+                    className="text-white/70 sm:hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
                   >
-                    <span className="w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-4 transition-all duration-300 rounded-full" />
+                    <span className="w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 sm:group-hover:w-4 transition-all duration-300 rounded-full" />
                     {item.name}
                   </Link>
                 </li>
@@ -114,7 +114,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 group">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 sm:group-hover:bg-primary-500/20 sm:group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
                   <MapPinIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <span className="text-white/70 text-sm pt-1">
@@ -123,20 +123,20 @@ export function Footer() {
                 </span>
               </li>
               <li className="flex items-center gap-3 group">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 sm:group-hover:bg-primary-500/20 sm:group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
                   <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <a href="tel:+380679082629" className="text-white/70 hover:text-primary-400 text-sm transition-colors duration-300">
+                  <a href="tel:+380679082629" className="text-white/70 sm:hover:text-primary-400 text-sm transition-colors duration-300">
                     +38 (067) 908 26 29
                   </a>
-                  <a href="tel:+380412447307" className="text-white/70 hover:text-primary-400 text-sm transition-colors duration-300">
+                  <a href="tel:+380412447307" className="text-white/70 sm:hover:text-primary-400 text-sm transition-colors duration-300">
                     +38 (041) 244 73 07
                   </a>
                 </div>
               </li>
               <li className="flex items-center gap-3 group">
-                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 sm:group-hover:bg-primary-500/20 sm:group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
                   <ClockIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div className="text-white/70 text-sm">
@@ -155,21 +155,21 @@ export function Footer() {
               © {new Date().getFullYear()} КОСМОДЕНТ. Всі права захищено.
             </p>
             <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6">
-              <Link href="#" className="text-white/70 hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group">
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300" />
+              <Link href="#" className="text-white/70 sm:hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group">
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 sm:group-hover:w-full transition-all duration-300" />
                 Політика конфіденційності
               </Link>
-              <Link href="#" className="text-white/70 hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group">
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300" />
+              <Link href="#" className="text-white/70 sm:hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group">
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 sm:group-hover:w-full transition-all duration-300" />
                 Умови використання
               </Link>
               <a
                 href="https://stepslab.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/70 hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group flex items-center gap-1"
+                className="text-white/70 sm:hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group flex items-center gap-1"
               >
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300" />
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 sm:group-hover:w-full transition-all duration-300" />
                 Made by STEPS LAB
                 <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

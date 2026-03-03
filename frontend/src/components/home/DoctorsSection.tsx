@@ -94,12 +94,12 @@ export function DoctorsSection() {
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-transparent to-primary-500/0 group-hover:from-primary-500/5 group-hover:to-primary-500/10 transition-all duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-transparent to-primary-500/0 sm:group-hover:from-primary-500/5 sm:group-hover:to-primary-500/10 transition-all duration-700" />
 
                   {/* Avatar with ring effect */}
                   <div className="relative mb-6 inline-block">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full blur-lg opacity-0 group-hover:opacity-40 transition-opacity duration-500 scale-110" />
-                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-primary-100 via-primary-50 to-white rounded-full flex items-center justify-center mx-auto shadow-lg shadow-primary-500/20 group-hover:shadow-xl group-hover:shadow-primary-500/30 transition-all duration-500 group-hover:scale-110">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full blur-lg opacity-0 sm:group-hover:opacity-40 transition-opacity duration-500 scale-110" />
+                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 bg-gradient-to-br from-primary-100 via-primary-50 to-white rounded-full flex items-center justify-center mx-auto shadow-lg shadow-primary-500/20 sm:group-hover:shadow-xl sm:group-hover:shadow-primary-500/30 transition-all duration-500 sm:group-hover:scale-110">
                       <span className="text-3xl sm:text-4xl font-bold bg-gradient-to-br from-primary-600 to-primary-500 bg-clip-text text-transparent">
                         {doctor.name.charAt(0)}
                       </span>
@@ -112,7 +112,7 @@ export function DoctorsSection() {
 
                   {/* Content */}
                   <div className="relative">
-                    <h3 className="text-lg sm:text-xl font-bold text-secondary-900 group-hover:text-primary-600 transition-colors duration-300 mb-2">
+                    <h3 className="text-lg sm:text-xl font-bold text-secondary-900 sm:group-hover:text-primary-600 transition-colors duration-300 mb-2">
                       {doctor.name}
                     </h3>
                     <p className="text-primary-600 font-semibold text-sm mb-4">{doctor.position}</p>
@@ -122,7 +122,7 @@ export function DoctorsSection() {
                       {doctor.specialization.slice(0, 2).map((spec) => (
                         <span
                           key={spec}
-                          className="text-xs px-2 py-1 sm:px-3 sm:py-1.5 bg-gradient-to-r from-secondary-100 to-secondary-50 text-secondary-600 rounded-full font-medium border border-secondary-200 group-hover:border-primary-300 group-hover:bg-primary-50 group-hover:text-primary-700 transition-all duration-300"
+                          className="text-xs px-2 py-1 sm:px-3 sm:py-1.5 bg-gradient-to-r from-secondary-100 to-secondary-50 text-secondary-600 rounded-full font-medium border border-secondary-200 sm:group-hover:border-primary-300 sm:group-hover:bg-primary-50 sm:group-hover:text-primary-700 transition-all duration-300"
                         >
                           {spec}
                         </span>
@@ -130,10 +130,10 @@ export function DoctorsSection() {
                     </div>
 
                     {/* Hover arrow indicator */}
-                    <div className="mt-4 sm:mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="mt-4 sm:mt-6 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
                       <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-primary-600">
                         Детальніше
-                        <svg className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-3 h-3 sm:w-4 sm:h-4 sm:group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                       </span>
@@ -141,7 +141,7 @@ export function DoctorsSection() {
                   </div>
 
                   {/* Corner decoration */}
-                  <div className="absolute -top-4 -right-4 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-primary-100/50 to-transparent rounded-full blur-xl group-hover:scale-150 transition-transform duration-700" />
+                  <div className="absolute -top-4 -right-4 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-primary-100/50 to-transparent rounded-full blur-xl sm:group-hover:scale-150 transition-transform duration-700" />
                 </Link>
               ))}
         </div>
@@ -150,7 +150,7 @@ export function DoctorsSection() {
         <div className="text-center mt-12 sm:mt-16">
           <Link href="/doctors" className="btn-outline inline-flex items-center gap-2 group w-full sm:w-auto justify-center">
             Всі лікарі
-            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>

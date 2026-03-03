@@ -86,7 +86,7 @@ export function ContactsPage() {
               </div>
               <div>
                 <h3 className="font-semibold text-secondary-900 mb-1 text-sm sm:text-base">Телефон</h3>
-                <a href={`tel:${contactInfo.phone}`} className="text-primary-600 hover:text-primary-700 text-base sm:text-lg">
+                <a href={`tel:${contactInfo.phone}`} className="text-primary-600 sm:hover:text-primary-700 text-base sm:text-lg">
                   {contactInfo.phone}
                 </a>
               </div>
@@ -98,7 +98,7 @@ export function ContactsPage() {
               </div>
               <div>
                 <h3 className="font-semibold text-secondary-900 mb-1 text-sm sm:text-base">Email</h3>
-                <a href={`mailto:${contactInfo.email}`} className="text-primary-600 hover:text-primary-700 text-sm sm:text-base">
+                <a href={`mailto:${contactInfo.email}`} className="text-primary-600 sm:hover:text-primary-700 text-sm sm:text-base">
                   {contactInfo.email}
                 </a>
               </div>

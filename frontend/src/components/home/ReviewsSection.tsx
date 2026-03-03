@@ -104,7 +104,7 @@ export function ReviewsSection() {
               Відгуки пацієнтів
             </span>
           </div>
-          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center leading-tight">
+          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center">
             Що кажуть наші пацієнти
           </h2>
           <p className="section-subtitle text-base sm:text-xl md:text-2xl text-center mx-auto max-w-2xl sm:max-w-3xl mt-4">
@@ -115,7 +115,7 @@ export function ReviewsSection() {
         {/* Stats */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-12 mb-12 sm:mb-16 animate-fade-in-up">
           <div className="relative group w-full sm:w-auto">
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-amber-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-amber-500/20 rounded-3xl blur-xl sm:group-hover:blur-2xl transition-all duration-500" />
             <div className="relative bg-white/80 backdrop-blur-xl border border-amber-200/50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-amber-500/10 min-h-[160px] sm:min-h-[180px] flex flex-col justify-center items-center">
               <div className="flex items-center justify-center gap-1 mb-3">
                 {[...Array(5)].map((_, i) => (
@@ -123,13 +123,13 @@ export function ReviewsSection() {
                     key={i}
                     className={`w-6 h-6 sm:w-7 sm:h-7 ${
                       i < Math.floor(stats.averageRating)
-                        ? 'text-amber-400 drop-shadow-sm'
+                        ? 'text-amber-400'
                         : 'text-secondary-200'
                     }`}
                   />
                 ))}
               </div>
-              <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
+              <div className="text-3xl sm:text-4xl font-bold text-amber-600">
                 {stats.averageRating}/5
               </div>
               <div className="text-sm text-secondary-600 font-medium mt-1 text-center">
@@ -138,12 +138,10 @@ export function ReviewsSection() {
             </div>
           </div>
 
-          <div className="hidden sm:block w-px h-24 bg-gradient-to-b from-transparent via-secondary-200 to-transparent" />
-
           <div className="relative group w-full sm:w-auto">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-primary-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-primary-500/20 rounded-3xl blur-xl sm:group-hover:blur-2xl transition-all duration-500" />
             <div className="relative bg-white/80 backdrop-blur-xl border border-primary-200/50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-primary-500/10 min-h-[160px] sm:min-h-[180px] flex flex-col justify-center items-center">
-              <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent mb-1">
+              <div className="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">
                 {stats.activeReviews}
               </div>
               <div className="text-sm text-secondary-600 font-medium text-center">
@@ -187,7 +185,7 @@ export function ReviewsSection() {
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   {/* Quote icon */}
-                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 text-4xl sm:text-5xl font-serif text-primary-200/50 select-none group-hover:text-primary-300/70 transition-colors duration-500">
+                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 text-4xl sm:text-5xl font-serif text-primary-200/50 select-none sm:group-hover:text-primary-300/70 transition-colors duration-500">
                     &quot;
                   </div>
 
@@ -206,7 +204,7 @@ export function ReviewsSection() {
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-3 sm:mb-4 group-hover:text-primary-600 transition-colors duration-300">
+                  <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-3 sm:mb-4 sm:group-hover:text-primary-600 transition-colors duration-300">
                     {review.title}
                   </h3>
                   <p className="text-sm sm:text-base text-secondary-600 mb-4 sm:mb-6 leading-relaxed line-clamp-3">
@@ -214,7 +212,7 @@ export function ReviewsSection() {
                   </p>
 
                   {/* Author and date */}
-                  <div className="flex items-center justify-between pt-4 border-t border-secondary-100 group-hover:border-primary-200 transition-colors duration-300">
+                  <div className="flex items-center justify-between pt-4 border-t border-secondary-100 sm:group-hover:border-primary-200 transition-colors duration-300">
                     <div className="flex items-center gap-2 sm:gap-3">
                       <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-primary-100 to-primary-50 rounded-full flex items-center justify-center shadow-md">
                         <span className="text-xs sm:text-sm font-bold text-primary-600">
@@ -240,7 +238,7 @@ export function ReviewsSection() {
                   </div>
 
                   {/* Hover glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-transparent to-primary-500/0 group-hover:from-primary-500/5 group-hover:to-primary-500/10 transition-all duration-700 rounded-3xl" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-transparent to-primary-500/0 sm:group-hover:from-primary-500/5 sm:group-hover:to-primary-500/10 transition-all duration-700 rounded-3xl" />
                 </div>
               ))}
         </div>
@@ -253,7 +251,7 @@ export function ReviewsSection() {
           >
             Переглянути всі відгуки
             <svg
-              className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
+              className="w-5 h-5 sm:group-hover:translate-x-1 transition-transform duration-300"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

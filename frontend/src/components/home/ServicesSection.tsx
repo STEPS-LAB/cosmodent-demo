@@ -122,17 +122,17 @@ export function ServicesSection() {
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   {/* Gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-primary-500/0 to-primary-500/0 group-hover:from-primary-500/5 group-hover:via-primary-500/10 group-hover:to-primary-500/5 transition-all duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-primary-500/0 to-primary-500/0 sm:group-hover:from-primary-500/5 sm:group-hover:via-primary-500/10 sm:group-hover:to-primary-500/5 transition-all duration-700" />
 
                   {/* Icon with glow effect */}
-                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-primary-100 to-primary-50 rounded-xl flex items-center justify-center text-primary-600 mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary-500/30 transition-all duration-500">
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-primary-100 to-primary-50 rounded-xl flex items-center justify-center text-primary-600 mb-6 sm:group-hover:scale-110 sm:group-hover:shadow-lg sm:group-hover:shadow-primary-500/30 transition-all duration-500">
                     {getServiceIcon(service.category)}
                   </div>
 
                   {/* Content */}
                   <div className="relative flex-1 flex flex-col">
                     <div className="flex items-start justify-between mb-4">
-                      <h3 className="text-lg sm:text-xl font-bold text-secondary-900 group-hover:text-primary-600 transition-colors duration-300">
+                      <h3 className="text-lg sm:text-xl font-bold text-secondary-900 sm:group-hover:text-primary-600 transition-colors duration-300">
                         {service.name}
                       </h3>
                       {service.category && (
@@ -146,21 +146,21 @@ export function ServicesSection() {
                     </p>
 
                     {/* Price and arrow - auto margin to push to bottom */}
-                    <div className="mt-auto flex items-center justify-between pt-4 border-t border-secondary-100 group-hover:border-primary-200 transition-colors duration-300">
-                      <div>
-                        <span className="text-xs text-secondary-500 block mb-0.5">Вартість від</span>
+                    <div className="mt-auto flex items-center justify-between pt-4 border-t border-secondary-100 sm:group-hover:border-primary-200 transition-colors duration-300">
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs text-secondary-500 whitespace-nowrap">Вартість від</span>
                         <span className="text-base sm:text-lg font-bold text-gradient-primary bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">
                           {service.startingPrice.toLocaleString()} ₴
                         </span>
                       </div>
-                      <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary-50 group-hover:bg-primary-600 flex items-center justify-center text-primary-600 group-hover:text-white transition-all duration-500 group-hover:translate-x-1 group-hover:rotate-45">
+                      <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary-50 sm:group-hover:bg-primary-600 flex items-center justify-center text-primary-600 sm:group-hover:text-white transition-all duration-500 sm:group-hover:translate-x-1 sm:group-hover:rotate-45">
                         →
                       </span>
                     </div>
                   </div>
 
                   {/* Corner decoration */}
-                  <div className="absolute -bottom-4 -right-4 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-primary-100/50 to-transparent rounded-full blur-xl group-hover:scale-150 transition-transform duration-700" />
+                  <div className="absolute -bottom-4 -right-4 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-primary-100/50 to-transparent rounded-full blur-xl sm:group-hover:scale-150 transition-transform duration-700" />
                 </Link>
               ))}
         </div>
@@ -169,7 +169,7 @@ export function ServicesSection() {
         <div className="text-center mt-12 sm:mt-16">
           <Link href="/services" className="btn-outline inline-flex items-center gap-2 group w-full sm:w-auto justify-center">
             Переглянути всі послуги
-            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>

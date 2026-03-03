@@ -53,14 +53,14 @@ export function DoctorsPage() {
                 <Link
                   key={doctor._id}
                   href={`/doctors/${doctor.slug}`}
-                  className="card p-6 text-center group hover:border-primary-200 transition-all duration-300"
+                  className="card p-6 text-center group sm:hover:border-primary-200 transition-all duration-300"
                 >
                   <div className="w-32 h-32 bg-primary-100 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <span className="text-4xl font-bold text-primary-600">
                       {doctor.name.charAt(0)}
                     </span>
                   </div>
-                  <h3 className="text-xl font-semibold text-secondary-900 group-hover:text-primary-600 transition-colors mb-1">
+                  <h3 className="text-xl font-semibold text-secondary-900 sm:group-hover:text-primary-600 transition-colors mb-1">
                     {doctor.name}
                   </h3>
                   <p className="text-primary-600 text-sm mb-3">{doctor.position}</p>

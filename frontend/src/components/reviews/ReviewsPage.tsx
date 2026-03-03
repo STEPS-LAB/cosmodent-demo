@@ -108,7 +108,7 @@ export function ReviewsPage() {
             <div className="space-y-2">
               {stats.ratingDistribution.map((item) => (
                 <div key={item.rating} className="flex items-center gap-3">
-                  <div className="w-12 text-sm text-secondary-600">
+                  <div className="w-12 text-sm text-secondary-600 flex items-center justify-end">
                     {item.rating} ★
                   </div>
                   <div className="flex-1 h-3 bg-secondary-100 rounded-full overflow-hidden">
@@ -123,7 +123,7 @@ export function ReviewsPage() {
                       }}
                     />
                   </div>
-                  <div className="w-12 text-sm text-secondary-600 text-right">
+                  <div className="w-12 text-sm text-secondary-600 text-right flex items-center justify-end">
                     {item.count}
                   </div>
                 </div>

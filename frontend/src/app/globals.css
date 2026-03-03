@@ -14,19 +14,19 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-primary-600 to-primary-500 rounded-xl hover:from-primary-700 hover:to-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 hover:-translate-y-0.5;
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-primary-600 to-primary-500 rounded-xl sm:hover:from-primary-700 sm:hover:to-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 shadow-lg shadow-primary-500/30 sm:hover:shadow-xl sm:hover:shadow-primary-500/40 sm:hover:-translate-y-0.5;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-primary-700 bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl hover:from-primary-100 hover:to-primary-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5;
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-primary-700 bg-gradient-to-r from-primary-50 to-primary-100 rounded-xl sm:hover:from-primary-100 sm:hover:to-primary-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 shadow-md sm:hover:shadow-lg sm:hover:-translate-y-0.5;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-secondary-700 bg-white/50 backdrop-blur-sm border-2 border-secondary-200 rounded-xl hover:border-primary-400 hover:text-primary-600 hover:bg-primary-50/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 hover:-translate-y-0.5;
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-secondary-700 bg-white/50 backdrop-blur-sm border-2 border-secondary-200 rounded-xl sm:hover:border-primary-400 sm:hover:text-primary-600 sm:hover:bg-primary-50/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 sm:hover:-translate-y-0.5;
   }
 
   .input-field {
-    @apply block w-full px-5 py-4 text-secondary-900 bg-white/80 backdrop-blur-sm border-2 border-secondary-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent focus:bg-white transition-all duration-300 shadow-sm hover:shadow-md;
+    @apply block w-full px-5 py-4 text-secondary-900 bg-white/80 backdrop-blur-sm border-2 border-secondary-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent focus:bg-white transition-all duration-300 shadow-sm sm:hover:shadow-md;
   }
 
   .label-field {
@@ -34,7 +34,7 @@
   }
 
   .section-title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-secondary-900 via-secondary-800 to-secondary-900 bg-clip-text text-transparent mb-6 leading-tight;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-secondary-900 via-secondary-800 to-secondary-900 bg-clip-text text-transparent mb-6 leading-normal;
   }
 
   .section-subtitle {
@@ -42,11 +42,11 @@
   }
 
   .card {
-    @apply bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-white/50 overflow-hidden hover:shadow-2xl hover:shadow-primary-500/10 transition-all duration-500 hover:-translate-y-2;
+    @apply bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-white/50 overflow-hidden sm:hover:shadow-2xl sm:hover:shadow-primary-500/10 transition-all duration-500 sm:hover:-translate-y-2;
   }
 
   .card-premium {
-    @apply bg-gradient-to-br from-white via-primary-50/30 to-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-primary-100/50 overflow-hidden hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-700 hover:-translate-y-3 hover:scale-[1.02];
+    @apply bg-gradient-to-br from-white via-primary-50/30 to-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-primary-100/50 overflow-hidden sm:hover:shadow-2xl sm:hover:shadow-primary-500/20 transition-all duration-700 sm:hover:-translate-y-3 sm:hover:scale-[1.02];
   }
 
   .container-custom {

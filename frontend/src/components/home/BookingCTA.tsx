@@ -45,12 +45,12 @@ export function BookingCTA() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center animate-fade-in-up" style={{ transitionDelay: '200ms' }}>
             <Link
               href="/booking"
-              className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-4 sm:py-5 text-base font-semibold text-primary-600 bg-white rounded-xl hover:bg-primary-50 transition-all duration-300 shadow-xl shadow-secondary-900/20 hover:shadow-2xl hover:shadow-secondary-900/30 hover:-translate-y-1 overflow-hidden w-full sm:w-auto"
+              className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-4 sm:py-5 text-base font-semibold text-primary-600 bg-white rounded-xl sm:hover:bg-primary-50 transition-all duration-300 shadow-xl shadow-secondary-900/20 sm:hover:shadow-2xl sm:hover:shadow-secondary-900/30 sm:hover:-translate-y-1 overflow-hidden w-full sm:w-auto"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/50 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/50 to-white/0 -translate-x-full sm:group-hover:translate-x-full transition-transform duration-700" />
               <span className="relative flex items-center gap-2">
                 Записатися онлайн
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </span>
@@ -58,7 +58,7 @@ export function BookingCTA() {
 
             <a
               href="tel:+380679082629"
-              className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-4 sm:py-5 text-base font-semibold text-white border-2 border-white/50 rounded-xl hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 w-full sm:w-auto"
+              className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-4 sm:py-5 text-base font-semibold text-white border-2 border-white/50 rounded-xl sm:hover:bg-white/10 sm:hover:border-white transition-all duration-300 backdrop-blur-sm sm:hover:-translate-y-1 w-full sm:w-auto"
             >
               <span className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
