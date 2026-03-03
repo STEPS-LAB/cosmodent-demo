@@ -33,13 +33,15 @@ export function AdminDoctorsPage() {
   }, [isAuthenticated, router]);
 
   const loadDoctors = () => {
-    api.getAdminDoctors().then((data) => {
-      setDoctors(data);
-      setLoading(false);
-    }).catch(() => {
-      setDoctors([]);
-      setLoading(false);
-    });
+    api.getAdminDoctors()
+      .then((data) => {
+        setDoctors(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setDoctors([]);
+        setLoading(false);
+      });
   };
 
   const handleDelete = async (id: string) => {
@@ -47,7 +49,7 @@ export function AdminDoctorsPage() {
     try {
       await api.deleteDoctor(id);
       loadDoctors();
-    } catch (_error) {
+    } catch {
       alert('Помилка видалення');
     }
   };
@@ -56,7 +58,7 @@ export function AdminDoctorsPage() {
     try {
       await api.updateDoctor(id, { isActive: !isActive });
       loadDoctors();
-    } catch (_error) {
+    } catch {
       alert('Помилка оновлення');
     }
   };

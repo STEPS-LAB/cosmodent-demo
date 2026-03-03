@@ -23,7 +23,7 @@ export function DoctorsPage() {
 
   useEffect(() => {
     api.getDoctors({ isActive: 'true' }).then((data) => {
-      setDoctors(data);
+      setDoctors(data as any[]);
       setLoading(false);
     });
   }, []);

@@ -41,49 +41,49 @@ export function AdminDashboardPage() {
 
     // Отримуємо статистику з API
     Promise.all([
-      api.get<any>('/api/appointments').catch(() => []),
-      api.get<any>('/api/reviews').catch(() => []),
-      api.get<any>('/api/services').catch(() => []),
-      api.get<any>('/api/doctors').catch(() => []),
+      api.getAdminAppointments().catch(() => []),
+      api.getAdminReviews().catch(() => []),
+      api.getAdminServices().catch(() => []),
+      api.getAdminDoctors().catch(() => []),
     ])
       .then(([appointments, reviews, services, doctors]) => {
         const now = new Date();
         const today = now.toISOString().split('T')[0];
-        
-        const todayAppointments = appointments.filter((a: any) => 
+
+        const todayAppointments = appointments.filter((a) =>
           a.date === today
         ).length;
-        
-        const upcomingAppointments = appointments.filter((a: any) => 
+
+        const upcomingAppointments = appointments.filter((a) =>
           a.date >= today && a.status !== 'cancelled'
         ).length;
 
-        const newAppointments = appointments.filter((a: any) => 
+        const newAppointments = appointments.filter((a) =>
           a.status === 'pending'
         ).length;
 
-        const confirmedAppointments = appointments.filter((a: any) => 
+        const confirmedAppointments = appointments.filter((a) =>
           a.status === 'confirmed'
         ).length;
 
-        const completedAppointments = appointments.filter((a: any) => 
+        const completedAppointments = appointments.filter((a) =>
           a.status === 'completed'
         ).length;
 
-        const cancelledAppointments = appointments.filter((a: any) => 
+        const cancelledAppointments = appointments.filter((a) =>
           a.status === 'cancelled'
         ).length;
 
-        const activeReviews = reviews.filter((r: any) => 
+        const activeReviews = reviews.filter((r) =>
           r.status === 'approved' || r.status === 'active'
         ).length;
 
-        const totalRating = reviews.reduce((sum: number, r: any) => 
+        const totalRating = reviews.reduce((sum, r) =>
           sum + (r.rating || 0), 0
         );
-        const averageRating = reviews.length > 0 
-          ? (totalRating / reviews.length).toFixed(1) 
-          : 0;
+        const averageRating = reviews.length > 0
+          ? (totalRating / reviews.length).toFixed(1)
+          : '0';
 
         setStats({
           appointments: {
@@ -98,15 +98,14 @@ export function AdminDashboardPage() {
           reviews: {
             totalReviews: reviews.length,
             activeReviews,
-            averageRating: parseFloat(averageRating as string),
+            averageRating: parseFloat(averageRating),
           },
           services: services.length,
           doctors: doctors.length,
         });
         setLoading(false);
       })
-      .catch((err) => {
-        console.error('Dashboard error:', err);
+      .catch(() => {
         setError('Не вдалося завантажити дані');
         setLoading(false);
       });

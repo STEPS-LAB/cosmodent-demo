@@ -34,13 +34,15 @@ export function AdminServicesPage() {
   }, [isAuthenticated, router]);
 
   const loadServices = () => {
-    api.getAdminServices().then((data) => {
-      setServices(data);
-      setLoading(false);
-    }).catch(() => {
-      setServices([]);
-      setLoading(false);
-    });
+    api.getAdminServices()
+      .then((data) => {
+        setServices(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setServices([]);
+        setLoading(false);
+      });
   };
 
   const handleDelete = async (id: string) => {
@@ -49,7 +51,7 @@ export function AdminServicesPage() {
     try {
       await api.deleteService(id);
       loadServices();
-    } catch (_error) {
+    } catch {
       alert('Помилка видалення');
     }
   };
@@ -58,7 +60,7 @@ export function AdminServicesPage() {
     try {
       await api.updateService(id, { isActive: !isActive });
       loadServices();
-    } catch (_error) {
+    } catch {
       alert('Помилка оновлення');
     }
   };
@@ -71,7 +73,7 @@ export function AdminServicesPage() {
 
     try {
       await api.updateServicesOrder(newServices.map((s) => s._id));
-    } catch (_error) {
+    } catch {
       loadServices();
     }
   };
@@ -84,7 +86,7 @@ export function AdminServicesPage() {
 
     try {
       await api.updateServicesOrder(newServices.map((s) => s._id));
-    } catch (_error) {
+    } catch {
       loadServices();
     }
   };

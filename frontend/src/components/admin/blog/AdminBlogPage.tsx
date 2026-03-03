@@ -32,13 +32,15 @@ export function AdminBlogPage() {
   }, [isAuthenticated, router]);
 
   const loadPosts = () => {
-    api.getAdminBlogPosts().then((data) => {
-      setPosts(data);
-      setLoading(false);
-    }).catch(() => {
-      setPosts([]);
-      setLoading(false);
-    });
+    api.getAdminBlogPosts()
+      .then((data) => {
+        setPosts(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setPosts([]);
+        setLoading(false);
+      });
   };
 
   const togglePublish = async (id: string, isPublished: boolean) => {
@@ -49,7 +51,7 @@ export function AdminBlogPage() {
         await api.publishBlogPost(id);
       }
       loadPosts();
-    } catch (_error) {
+    } catch {
       alert('Помилка публікації');
     }
   };
@@ -59,7 +61,7 @@ export function AdminBlogPage() {
     try {
       await api.deleteBlogPost(id);
       loadPosts();
-    } catch (_error) {
+    } catch {
       alert('Помилка видалення');
     }
   };

@@ -47,7 +47,7 @@ export function HeroSection() {
           {/* Subtitle */}
           <p className={`text-base sm:text-xl md:text-2xl text-secondary-600 mb-8 sm:mb-10 leading-relaxed max-w-3xl animate-fade-in-up ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '200ms' }}>
             Професійні стоматологічні послуги з використанням найновіших технологій.
-            Імплантація, протезування, відбілювання та лікування зубів у серці Києва.
+            Імплантація, протезування, відбілювання та лікування зубів у серці Житомира.
           </p>
 
           {/* CTA Buttons */}

@@ -50,7 +50,7 @@ export function AdminAppointmentsPage() {
 
     // WebSocket connection for real-time updates
     const socket = io(process.env.NEXT_PUBLIC_WS_URL || 'http://localhost:3002');
-    
+
     socket.on('appointment:created', (newAppointment) => {
       setAppointments((prev) => [newAppointment, ...prev]);
     });
@@ -64,24 +64,25 @@ export function AdminAppointmentsPage() {
     return () => {
       socket.disconnect();
     };
-  }, [isAuthenticated, router]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadAppointments = () => {
-    const query = filter !== 'all' ? `?status=${filter}` : '';
-    api.getAdminAppointments(filter !== 'all' ? filter : undefined).then((data) => {
-      setAppointments(data);
-      setLoading(false);
-    }).catch(() => {
-      setAppointments([]);
-      setLoading(false);
-    });
+    api.getAdminAppointments(filter !== 'all' ? filter : undefined)
+      .then((data) => {
+        setAppointments(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setAppointments([]);
+        setLoading(false);
+      });
   };
 
   const updateStatus = async (id: string, status: string) => {
     try {
       await api.updateAppointmentStatus(id, status);
       loadAppointments();
-    } catch (_error) {
+    } catch {
       alert('Помилка оновлення статусу');
     }
   };

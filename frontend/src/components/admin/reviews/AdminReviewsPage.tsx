@@ -44,20 +44,22 @@ export function AdminReviewsPage() {
   }, [isAuthenticated, router]);
 
   const loadReviews = () => {
-    api.getAdminReviews().then((data) => {
-      setReviews(data);
-      setLoading(false);
-    }).catch(() => {
-      setReviews([]);
-      setLoading(false);
-    });
+    api.getAdminReviews()
+      .then((data) => {
+        setReviews(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setReviews([]);
+        setLoading(false);
+      });
   };
 
   const approveReview = async (id: string) => {
     try {
       await api.approveReview(id);
       loadReviews();
-    } catch (_error) {
+    } catch {
       alert('Помилка схвалення');
     }
   };
@@ -66,7 +68,7 @@ export function AdminReviewsPage() {
     try {
       await api.rejectReview(id);
       loadReviews();
-    } catch (_error) {
+    } catch {
       alert('Помилка відхилення');
     }
   };
@@ -76,7 +78,7 @@ export function AdminReviewsPage() {
     try {
       await api.deleteReview(id);
       loadReviews();
-    } catch (_error) {
+    } catch {
       alert('Помилка видалення');
     }
   };

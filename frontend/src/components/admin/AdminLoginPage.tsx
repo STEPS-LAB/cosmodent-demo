@@ -44,10 +44,10 @@ export function AdminLoginPage() {
         setAuth(response.accessToken, response.admin);
         await new Promise(resolve => setTimeout(resolve, 100));
         router.push('/admin/dashboard');
-      } catch (apiError) {
+      } catch {
         // Якщо API недоступний, використовуємо демо-режим
         console.log('API недоступний, використовуємо демо-режим');
-        
+
         if (data.email === 'admin' && data.password === '12345678') {
           const mockUser = {
             id: '1',
@@ -56,7 +56,7 @@ export function AdminLoginPage() {
             role: 'superadmin',
           };
           const mockToken = 'demo-admin-token';
-          
+
           setAuth(mockToken, mockUser);
           await new Promise(resolve => setTimeout(resolve, 100));
           router.push('/admin/dashboard');

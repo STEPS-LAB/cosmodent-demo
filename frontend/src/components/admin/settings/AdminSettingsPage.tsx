@@ -31,10 +31,12 @@ export function AdminSettingsPage() {
   }, [isAuthenticated, router]);
 
   const loadSettings = () => {
-    api.getAdminSettings().then((data) => {
-      setSettings(data);
-      setLoading(false);
-    }).catch(() => {
+    api.getAdminSettings()
+      .then((data) => {
+        setSettings(data as Settings);
+        setLoading(false);
+      })
+      .catch(() => {
       // Якщо немає налаштувань, використовуємо значення за замовчуванням
       setSettings({
         clinicName: 'КОСМОДЕНТ',
@@ -58,7 +60,7 @@ export function AdminSettingsPage() {
     try {
       await api.updateSettings(settings);
       alert('Налаштування збережено');
-    } catch (_error) {
+    } catch {
       alert('Помилка збереження');
     } finally {
       setSaving(false);

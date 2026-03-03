@@ -27,7 +27,7 @@ export function ReviewsSection() {
     Promise.all([
       api.getReviews({ isActive: 'true' }),
       api.getReviewStatistics(),
-    ]).then(([reviewsData, statsData]) => {
+    ]).then(([reviewsData, statsData]: [any[], any]) => {
       setReviews(reviewsData.slice(0, 3));
       setStats({
         averageRating: statsData.averageRating,

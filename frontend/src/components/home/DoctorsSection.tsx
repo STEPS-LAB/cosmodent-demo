@@ -21,7 +21,7 @@ export function DoctorsSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    api.getDoctors({ isActive: 'true' }).then((data) => {
+    api.getDoctors({ isActive: 'true' }).then((data: any[]) => {
       setDoctors(data.slice(0, 4));
       setLoading(false);
     });

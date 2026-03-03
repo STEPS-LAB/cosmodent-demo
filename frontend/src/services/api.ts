@@ -29,6 +29,25 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      // Токен невірний або застарів - повертаємо пустий масив або об'єкт
+      // Для statistics повертаємо дефолтний об'єкт
+      if (endpoint.includes('statistics')) {
+        return {
+          totalReviews: 0,
+          activeReviews: 0,
+          averageRating: 0,
+          ratingDistribution: [
+            { rating: 1, count: 0 },
+            { rating: 2, count: 0 },
+            { rating: 3, count: 0 },
+            { rating: 4, count: 0 },
+            { rating: 5, count: 0 },
+          ],
+        } as T;
+      }
+      return [] as T;
+    }
     const error = await response.json().catch(() => ({ message: 'Request failed' }));
     throw new Error(error.message || `HTTP ${response.status}`);
   }
@@ -48,7 +67,7 @@ export const api = {
     fetchApi<T>(url, { method: 'PUT', body: JSON.stringify(data) }),
 
   // Services
-  getServices: async (params?: Record<string, string>) => {
+  getServices: async (params?: Record<string, string>): Promise<any[]> => {
     const query = params ? new URLSearchParams(params).toString() : '';
     return fetchApi(`/api/services${query ? `?${query}` : ''}`);
   },
@@ -57,7 +76,7 @@ export const api = {
     fetchApi(`/api/services/${slug}`),
 
   // Doctors
-  getDoctors: async (params?: Record<string, string>) => {
+  getDoctors: async (params?: Record<string, string>): Promise<any[]> => {
     const query = params ? new URLSearchParams(params).toString() : '';
     return fetchApi(`/api/doctors${query ? `?${query}` : ''}`);
   },
@@ -66,7 +85,7 @@ export const api = {
     fetchApi(`/api/doctors/${slug}`),
 
   // Reviews
-  getReviews: async (params?: Record<string, string>) => {
+  getReviews: async (params?: Record<string, string>): Promise<any[]> => {
     const query = params ? new URLSearchParams(params).toString() : '';
     return fetchApi(`/api/reviews${query ? `?${query}` : ''}`);
   },
@@ -89,12 +108,12 @@ export const api = {
     }),
 
   // Appointments
-  getAvailableDates: async (days?: number) => {
+  getAvailableDates: async (days?: number): Promise<any[]> => {
     const query = days ? `?days=${days}` : '';
     return fetchApi(`/api/appointments/available-dates${query}`);
   },
 
-  getAvailableSlots: async (date: string, service?: string) => {
+  getAvailableSlots: async (date: string, service?: string): Promise<any[]> => {
     const query = new URLSearchParams({ date });
     if (service) query.append('service', service);
     return fetchApi(`/api/appointments/available-slots?${query.toString()}`);
@@ -119,7 +138,7 @@ export const api = {
     }),
 
   // Blog
-  getBlogPosts: async (params?: Record<string, string>) => {
+  getBlogPosts: async (params?: Record<string, string>): Promise<any[]> => {
     const query = params ? new URLSearchParams(params).toString() : '';
     return fetchApi(`/api/blog${query ? `?${query}` : ''}`);
   },
@@ -134,7 +153,7 @@ export const api = {
   getSettings: () =>
     fetchApi('/api/settings'),
 
-  getContactInfo: () =>
+  getContactInfo: (): Promise<any> =>
     fetchApi('/api/settings/contact'),
 
   // Admin Auth
@@ -149,7 +168,7 @@ export const api = {
     fetchApi('/api/admin/dashboard'),
 
   // Admin Services
-  getAdminServices: () =>
+  getAdminServices: (): Promise<any[]> =>
     fetchApi('/api/admin/services'),
   createService: (data: any) =>
     fetchApi('/api/admin/services', { method: 'POST', body: JSON.stringify(data) }),
@@ -161,7 +180,7 @@ export const api = {
     fetchApi('/api/admin/services/order', { method: 'PUT', body: JSON.stringify({ ids }) }),
 
   // Admin Appointments
-  getAdminAppointments: (status?: string) => {
+  getAdminAppointments: (status?: string): Promise<any[]> => {
     const query = status && status !== 'all' ? `?status=${status}` : '';
     return fetchApi(`/api/admin/appointments${query}`);
   },
@@ -171,7 +190,7 @@ export const api = {
     fetchApi(`/api/admin/appointments/${id}/cancel`, { method: 'PATCH' }),
 
   // Admin Doctors
-  getAdminDoctors: () =>
+  getAdminDoctors: (): Promise<any[]> =>
     fetchApi('/api/admin/doctors'),
   createDoctor: (data: any) =>
     fetchApi('/api/admin/doctors', { method: 'POST', body: JSON.stringify(data) }),
@@ -181,7 +200,7 @@ export const api = {
     fetchApi(`/api/admin/doctors/${id}`, { method: 'DELETE' }),
 
   // Admin Reviews
-  getAdminReviews: () =>
+  getAdminReviews: (): Promise<any[]> =>
     fetchApi('/api/admin/reviews'),
   approveReview: (id: string) =>
     fetchApi(`/api/admin/reviews/${id}/approve`, { method: 'PATCH' }),
@@ -193,7 +212,7 @@ export const api = {
     fetchApi('/api/admin/reviews/statistics'),
 
   // Admin Blog
-  getAdminBlogPosts: () =>
+  getAdminBlogPosts: (): Promise<any[]> =>
     fetchApi('/api/admin/blog'),
   createBlogPost: (data: any) =>
     fetchApi('/api/admin/blog', { method: 'POST', body: JSON.stringify(data) }),

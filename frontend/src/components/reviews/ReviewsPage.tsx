@@ -71,7 +71,7 @@ export function ReviewsPage() {
             <div className="card p-6 md:col-span-3">
               <h3 className="font-semibold text-secondary-900 mb-4">Розподіл оцінок</h3>
               <div className="space-y-2">
-                {stats.ratingDistribution.map((item) => (
+                {stats.ratingDistribution?.map((item) => (
                   <div key={item.rating} className="flex items-center gap-3">
                     <div className="w-12 text-sm text-secondary-600">{item.rating} ★</div>
                     <div className="flex-1 h-3 bg-secondary-100 rounded-full overflow-hidden">

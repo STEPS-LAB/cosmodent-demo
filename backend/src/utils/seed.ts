@@ -4,6 +4,7 @@ import { Admin } from '../models/Admin';
 import { Service } from '../models/Service';
 import { Doctor } from '../models/Doctor';
 import { Settings } from '../models/Settings';
+import { Review } from '../models/Review';
 import { logger } from '../config/logger';
 
 const services = [
@@ -351,6 +352,45 @@ export const seedDatabase = async () => {
       },
     });
     logger.info('Created settings');
+
+    // Create reviews
+    const reviews = [
+      {
+        patientName: 'Олена',
+        rating: 5,
+        title: 'Найкраща стоматологія у Житомирі!',
+        content: 'Лікуюсь тут вже майже два роки. Найкраща стоматологія у Житомирі! Ставила пломби та лікувала карієс у Лілії Василівни і у Тетяни Олександрівни. Все дуже сподобалось, безболісне лікування, якісно зроблені зуби та дуже привітні лікарі. Окремо хочу подякувати Марії на ресепшені, завжди привітна та дуже радісна людина. Ціни теж тут адекватні. Дуже рекомендую!',
+        status: 'approved',
+        isActive: true,
+      },
+      {
+        patientName: 'Ігор',
+        rating: 5,
+        title: 'Чудовий лікар Інна В\'ячеславівна',
+        content: 'Лікую зуби в Космоденті близько 10 років, приємний інтер\'єр, гарно оформлена територія біля клініки, завжди усміхнена Майя на ресепшені. Але найголовніше - це лікар Осадчук Інна В\'ячеславівна, яка завжди порадить і якісно зробить свою роботу.',
+        status: 'approved',
+        isActive: true,
+      },
+      {
+        patientName: 'Дмитро',
+        rating: 5,
+        title: 'Професійне видалення',
+        content: 'Видалили сьогодні декілька пнів: сидів чекав коли буде нестерпний біль - недочекався. В захваті від клініки та від персоналу: пояснили все декілька разів. Ціни помірні',
+        status: 'approved',
+        isActive: true,
+      },
+      {
+        patientName: 'Світлана',
+        rating: 5,
+        title: 'Сімейна стоматологія',
+        content: 'Кваліфікаційні лікарі, якісне лікування, помірні ціни. Лікуємося там всією сім\'єю',
+        status: 'approved',
+        isActive: true,
+      },
+    ];
+
+    await Review.insertMany(reviews);
+    logger.info(`Created ${reviews.length} reviews`);
 
     logger.info('Database seeded successfully!');
     process.exit(0);
