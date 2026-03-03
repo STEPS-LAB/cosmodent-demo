@@ -26,7 +26,7 @@ type WsHandler<T = unknown> = (message: WsMessage<T>) => void;
  */
 export function useWebSocket(handlers: Partial<Record<WsEventType, WsHandler>>) {
   const wsRef       = useRef<WebSocket | null>(null);
-  const retryRef    = useRef<ReturnType<typeof setTimeout>>();
+  const retryRef    = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const retryDelay  = useRef(1000);
   const handlersRef = useRef(handlers);
 

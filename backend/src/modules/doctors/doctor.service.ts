@@ -22,7 +22,7 @@ export class DoctorService {
       Doctor.countDocuments(filter),
     ]);
 
-    return buildPaginatedResult(data as IDoctor[], total, page, limit);
+    return buildPaginatedResult(data as unknown as IDoctor[], total, page, limit);
   }
 
   async findBySlug(slug: string): Promise<IDoctor | null> {
@@ -52,7 +52,7 @@ export class DoctorService {
     return Doctor.find({ isActive: true })
       .populate('services', 'name slug')
       .sort({ order: 1 })
-      .lean() as Promise<IDoctor[]>;
+      .lean() as unknown as Promise<IDoctor[]>;
   }
 
   // Recalculate average rating after review added/removed

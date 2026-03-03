@@ -1,5 +1,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { z } from 'zod';
+import { Types } from 'mongoose';
 import { reviewService } from './review.service';
 import { authenticate } from '../../plugins/auth';
 
@@ -23,7 +24,13 @@ export async function reviewRoutes(fastify: FastifyInstance): Promise<void> {
   fastify.post('/', async (req: FastifyRequest, reply: FastifyReply) => {
     const body = ReviewBodySchema.safeParse(req.body);
     if (!body.success) return reply.code(400).send({ error: body.error.flatten() });
-    const review = await reviewService.create({ ...body.data, isApproved: false });
+    const { serviceId, doctorId, ...rest } = body.data;
+    const review = await reviewService.create({
+      ...rest,
+      isApproved: false,
+      ...(serviceId ? { serviceId: new Types.ObjectId(serviceId) } : {}),
+      ...(doctorId ? { doctorId: new Types.ObjectId(doctorId) } : {}),
+    });
     return reply.code(201).send({ success: true, data: review, message: 'Відгук надіслано на модерацію' });
   });
 

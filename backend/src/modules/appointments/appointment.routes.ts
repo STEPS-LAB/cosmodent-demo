@@ -1,5 +1,6 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { z } from 'zod';
+import { Types } from 'mongoose';
 import { appointmentService } from './appointment.service';
 import { authenticate } from '../../plugins/auth';
 
@@ -35,9 +36,12 @@ export async function appointmentRoutes(fastify: FastifyInstance): Promise<void>
     if (!body.success) return reply.code(400).send({ error: body.error.flatten() });
 
     try {
+      const { serviceId, doctorId, date, ...rest } = body.data;
       const appointment = await appointmentService.create({
-        ...body.data,
-        date: new Date(body.data.date),
+        ...rest,
+        date: new Date(date),
+        serviceId: new Types.ObjectId(serviceId),
+        ...(doctorId ? { doctorId: new Types.ObjectId(doctorId) } : {}),
       });
 
       // Real-time notification to admin clients

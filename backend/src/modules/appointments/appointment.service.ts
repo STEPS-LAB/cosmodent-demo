@@ -90,14 +90,14 @@ export class AppointmentService {
       Appointment.find(filter)
         .populate('serviceId', 'name slug startingPrice')
         .populate('doctorId', 'name photo')
-        .sort({ [sortField]: sortOrder })
+        .sort({ [sortField]: sortOrder as 1 | -1 })
         .skip(skip)
         .limit(limit)
         .lean(),
       Appointment.countDocuments(filter),
     ]);
 
-    return buildPaginatedResult(data as IAppointment[], total, page, limit);
+    return buildPaginatedResult(data as unknown as IAppointment[], total, page, limit);
   }
 
   // ── Find by ID ───────────────────────────────────────────

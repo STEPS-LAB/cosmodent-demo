@@ -24,7 +24,7 @@ export class BlogService {
       BlogPost.countDocuments(filter),
     ]);
 
-    return buildPaginatedResult(data as IBlogPost[], total, page, limit);
+    return buildPaginatedResult(data as unknown as IBlogPost[], total, page, limit);
   }
 
   async findBySlug(slug: string): Promise<IBlogPost | null> {

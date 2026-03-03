@@ -24,7 +24,7 @@ export class AuthService {
     });
 
     const { password: _pw, ...adminData } = admin.toObject();
-    return { token, admin: adminData as Omit<IAdmin, 'password'> };
+    return { token, admin: adminData as unknown as Omit<IAdmin, 'password'> };
   }
 
   async me(id: string): Promise<IAdmin | null> {

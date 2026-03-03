@@ -26,7 +26,7 @@ export class ReviewService {
       Review.countDocuments(filter),
     ]);
 
-    return buildPaginatedResult(data as IReview[], total, page, limit);
+    return buildPaginatedResult(data as unknown as IReview[], total, page, limit);
   }
 
   async create(data: Partial<IReview>): Promise<IReview> {
@@ -67,7 +67,7 @@ export class ReviewService {
       .populate('doctorId', 'name photo')
       .sort({ rating: -1, createdAt: -1 })
       .limit(limit)
-      .lean() as Promise<IReview[]>;
+      .lean() as unknown as Promise<IReview[]>;
   }
 
   private async recalculateDoctorRating(doctorId: string): Promise<void> {

@@ -19,7 +19,7 @@ export class ServiceService {
       Service.countDocuments(filter),
     ]);
 
-    return buildPaginatedResult(data as IService[], total, page, limit);
+    return buildPaginatedResult(data as unknown as IService[], total, page, limit);
   }
 
   async findBySlug(slug: string): Promise<IService | null> {
@@ -54,7 +54,7 @@ export class ServiceService {
   }
 
   async getPublicList(): Promise<IService[]> {
-    return Service.find({ isActive: true }).sort({ order: 1 }).lean() as Promise<IService[]>;
+    return Service.find({ isActive: true }).sort({ order: 1 }).lean() as unknown as Promise<IService[]>;
   }
 }
 

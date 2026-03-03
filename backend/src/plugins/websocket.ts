@@ -45,8 +45,7 @@ export const websocketPlugin = fp(async (fastify: FastifyInstance) => {
   fastify.decorate('wsBroadcast', broadcast);
 
   // ── WebSocket route ──────────────────────────────────────
-  fastify.get('/ws', { websocket: true }, (connection) => {
-    const ws = connection.socket;
+  fastify.get('/ws', { websocket: true }, (ws: WebSocket) => {
     clients.add(ws);
     fastify.log.info(`WebSocket client connected (total: ${clients.size})`);
 
@@ -63,7 +62,7 @@ export const websocketPlugin = fp(async (fastify: FastifyInstance) => {
       fastify.log.info(`WebSocket client disconnected (total: ${clients.size})`);
     });
 
-    ws.on('error', (err) => {
+    ws.on('error', (err: Error) => {
       fastify.log.error({ err }, 'WebSocket error');
       clients.delete(ws);
     });
