@@ -27,12 +27,13 @@ interface DashboardStats {
 
 export function AdminDashboardPage() {
   const router = useRouter();
-  const { isAuthenticated, user } = useAdminStore();
+  const { isAuthenticated, user, token } = useAdminStore();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    // Перевіряємо автентифікацію
+    if (!isAuthenticated || !token) {
       router.push('/admin/login');
       return;
     }
@@ -43,9 +44,10 @@ export function AdminDashboardPage() {
         setLoading(false);
       })
       .catch(() => {
+        // Якщо отримали помилку 401, робимо logout і редирект
         router.push('/admin/login');
       });
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, token, router]);
 
   if (!isAuthenticated || loading) {
     return (

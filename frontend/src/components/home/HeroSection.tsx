@@ -1,47 +1,93 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export function HeroSection() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <section className="relative bg-gradient-to-br from-primary-50 to-white overflow-hidden">
-      {/* Background decoration */}
+    <section className="relative bg-gradient-to-br from-primary-50 via-white to-primary-100/50 overflow-hidden min-h-[90vh] flex items-center">
+      {/* Animated background decoration */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-100 rounded-full opacity-50 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary-100 rounded-full opacity-50 blur-3xl" />
+        {/* Large gradient orbs */}
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-primary-200 to-primary-300 rounded-full opacity-60 blur-3xl float animate-pulse-slow" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-primary-200 to-primary-300 rounded-full opacity-60 blur-3xl float-delayed animate-pulse-slow" />
+        
+        {/* Additional decorative elements */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-br from-primary-100 to-transparent rounded-full opacity-40 blur-2xl float" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-tl from-primary-100 to-transparent rounded-full opacity-40 blur-2xl float-delayed" style={{ animationDelay: '2s' }} />
+        
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMTAgNjAgTSAwIDEwIEwgNjAgMTAiIHN0cm9rZT0iIzEwYjk4MSIgc3Ryb2tlLXdpZHRoPSIwLjUiIGZpbGw9Im5vbmUiIG9wYWNpdHk9IjAuMDUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30" />
       </div>
 
-      <div className="container-custom relative py-20 md:py-32">
-        <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 mb-6 leading-tight">
-            Сучасна стоматологія для вашої ідеальної посмішки
+      <div className="container-custom relative py-20 md:py-32 z-10">
+        <div className="max-w-4xl">
+          {/* Badge */}
+          <div className={`inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm border border-primary-200 rounded-full mb-8 shadow-lg shadow-primary-500/10 animate-fade-in-down ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+            </span>
+            <span className="text-sm font-medium text-primary-700">Провідна стоматологічна клініка</span>
+          </div>
+
+          {/* Main heading */}
+          <h1 className={`text-5xl md:text-6xl lg:text-7xl font-bold text-secondary-900 mb-8 leading-tight animate-fade-in-up ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '100ms' }}>
+            Сучасна стоматологія для{' '}
+            <span className="text-gradient-primary bg-gradient-to-r from-primary-600 via-primary-500 to-emerald-500">вашої ідеальної</span>
+            {' '}посмішки
           </h1>
-          <p className="text-lg md:text-xl text-secondary-600 mb-8 leading-relaxed">
-            Професійні стоматологічні послуги з використанням найновіших технологій. 
+
+          {/* Subtitle */}
+          <p className={`text-xl md:text-2xl text-secondary-600 mb-10 leading-relaxed max-w-3xl animate-fade-in-up ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '200ms' }}>
+            Професійні стоматологічні послуги з використанням найновіших технологій.
             Імплантація, протезування, відбілювання та лікування зубів у серці Києва.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/booking" className="btn-primary text-center">
+
+          {/* CTA Buttons */}
+          <div className={`flex flex-col sm:flex-row gap-4 mb-16 animate-fade-in-up ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '300ms' }}>
+            <Link href="/booking" className="btn-primary group">
               Записатися на прийом
+              <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </Link>
-            <Link href="/services" className="btn-outline text-center">
+            <Link href="/services" className="btn-outline group">
               Дізнатися більше
+              <svg className="ml-2 w-5 h-5 group-hover:rotate-45 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
             </Link>
           </div>
 
           {/* Trust indicators */}
-          <div className="mt-12 grid grid-cols-3 gap-6 md:gap-12">
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary-600">15+</div>
-              <div className="text-sm text-secondary-600 mt-1">Років досвіду</div>
+          <div className={`grid grid-cols-3 gap-6 md:gap-12 animate-fade-in-up ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '400ms' }}>
+            <div className="group">
+              <div className="text-4xl md:text-5xl font-bold text-gradient-primary bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">15+</div>
+              <div className="text-sm md:text-base text-secondary-600 mt-2 font-medium">Років досвіду</div>
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary-600">5000+</div>
-              <div className="text-sm text-secondary-600 mt-1">Задоволених пацієнтів</div>
+            <div className="group">
+              <div className="text-4xl md:text-5xl font-bold text-gradient-primary bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">5000+</div>
+              <div className="text-sm md:text-base text-secondary-600 mt-2 font-medium">Задоволених пацієнтів</div>
             </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary-600">20+</div>
-              <div className="text-sm text-secondary-600 mt-1">Послуг</div>
+            <div className="group">
+              <div className="text-4xl md:text-5xl font-bold text-gradient-primary bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-300">20+</div>
+              <div className="text-sm md:text-base text-secondary-600 mt-2 font-medium">Послуг</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow ${mounted ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '1s' }}>
+        <div className="w-6 h-10 border-2 border-secondary-300 rounded-full flex items-start justify-center p-2">
+          <div className="w-1 h-2 bg-primary-500 rounded-full animate-slide-down" />
         </div>
       </div>
     </section>

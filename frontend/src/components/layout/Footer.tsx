@@ -19,32 +19,61 @@ const quickLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-secondary-900 text-white">
-      <div className="container-custom py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="relative bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-900 text-white overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-bl from-primary-500/10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-primary-500/10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMTAgNjAgTSAwIDEwIEwgNjAgMTAiIHN0cm9rZT0iIzEwYjk4MSIgc3Ryb2tlLXdpZHRoPSIwLjI1IiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjAzIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-30" />
+      </div>
+
+      <div className="container-custom relative z-10 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <Link href="/" className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">C</span>
+            <Link href="/" className="flex items-center space-x-3 mb-6 group">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
+                <div className="relative w-12 h-12 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                  <span className="text-white font-bold text-2xl">C</span>
+                </div>
               </div>
-              <span className="text-xl font-bold">CosmoDent</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-white via-secondary-100 to-white bg-clip-text text-transparent">CosmoDent</span>
             </Link>
-            <p className="text-secondary-400 text-sm">
-              Сучасна стоматологічна клініка з інноваційними технологіями лікування.
+            <p className="text-secondary-400 text-sm leading-relaxed mb-6">
+              Сучасна стоматологічна клініка з інноваційними технологіями лікування. 
+              Турбота про вашу посмішку — наш пріоритет.
             </p>
+            
+            {/* Social links placeholder */}
+            <div className="flex gap-3">
+              {['facebook', 'instagram', 'twitter'].map((social) => (
+                <a
+                  key={social}
+                  href="#"
+                  className="w-10 h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-secondary-400 hover:text-primary-400 hover:bg-primary-500/20 hover:border-primary-500/30 transition-all duration-300 hover:-translate-y-1"
+                  aria-label={social}
+                >
+                  <span className="text-xs font-semibold uppercase">{social.charAt(0)}</span>
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Services */}
           <div>
-            <h3 className="font-semibold mb-4">Послуги</h3>
-            <ul className="space-y-2">
+            <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
+              <span className="w-1 h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full" />
+              Послуги
+            </h3>
+            <ul className="space-y-3">
               {services.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-secondary-400 hover:text-primary-400 text-sm transition-colors"
+                    className="text-secondary-400 hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
                   >
+                    <span className="w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-4 transition-all duration-300 rounded-full" />
                     {item.name}
                   </Link>
                 </li>
@@ -54,14 +83,18 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold mb-4">Навігація</h3>
-            <ul className="space-y-2">
+            <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
+              <span className="w-1 h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full" />
+              Навігація
+            </h3>
+            <ul className="space-y-3">
               {quickLinks.map((item) => (
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-secondary-400 hover:text-primary-400 text-sm transition-colors"
+                    className="text-secondary-400 hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
                   >
+                    <span className="w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-4 transition-all duration-300 rounded-full" />
                     {item.name}
                   </Link>
                 </li>
@@ -71,23 +104,32 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-semibold mb-4">Контакти</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start space-x-2">
-                <MapPinIcon className="w-5 h-5 text-primary-500 mt-0.5" />
-                <span className="text-secondary-400 text-sm">
+            <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
+              <span className="w-1 h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full" />
+              Контакти
+            </h3>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3 group">
+                <div className="w-10 h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
+                  <MapPinIcon className="w-5 h-5" />
+                </div>
+                <span className="text-secondary-400 text-sm pt-1">
                   вул. Хрещатик, 1, Київ, 01001
                 </span>
               </li>
-              <li className="flex items-center space-x-2">
-                <PhoneIcon className="w-5 h-5 text-primary-500" />
-                <a href="tel:+380441234567" className="text-secondary-400 hover:text-primary-400 text-sm">
+              <li className="flex items-center gap-3 group">
+                <div className="w-10 h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
+                  <PhoneIcon className="w-5 h-5" />
+                </div>
+                <a href="tel:+380441234567" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
                   +380 (44) 123-45-67
                 </a>
               </li>
-              <li className="flex items-center space-x-2">
-                <EnvelopeIcon className="w-5 h-5 text-primary-500" />
-                <a href="mailto:info@cosmodent.ua" className="text-secondary-400 hover:text-primary-400 text-sm">
+              <li className="flex items-center gap-3 group">
+                <div className="w-10 h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
+                  <EnvelopeIcon className="w-5 h-5" />
+                </div>
+                <a href="mailto:info@cosmodent.ua" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
                   info@cosmodent.ua
                 </a>
               </li>
@@ -96,16 +138,18 @@ export function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-secondary-800 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-secondary-400 text-sm">
+        <div className="border-t border-white/10 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-secondary-500 text-sm">
               © {new Date().getFullYear()} CosmoDent. Всі права захищено.
             </p>
-            <div className="flex space-x-6">
-              <Link href="#" className="text-secondary-400 hover:text-primary-400 text-sm">
+            <div className="flex flex-wrap justify-center gap-6">
+              <Link href="#" className="text-secondary-500 hover:text-primary-400 text-sm transition-all duration-300 relative group">
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300" />
                 Політика конфіденційності
               </Link>
-              <Link href="#" className="text-secondary-400 hover:text-primary-400 text-sm">
+              <Link href="#" className="text-secondary-500 hover:text-primary-400 text-sm transition-all duration-300 relative group">
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300" />
                 Умови використання
               </Link>
             </div>

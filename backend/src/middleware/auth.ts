@@ -1,11 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-import { FastifyJwtNamespace } from '@fastify/jwt';
 
 declare module 'fastify' {
-  interface FastifyInstance {
-    authenticate: any;
-  }
-  
   interface FastifyRequest {
     user?: {
       id: string;
@@ -21,15 +16,17 @@ export const authMiddleware = async (
   reply: FastifyReply
 ) => {
   try {
-    await request.jwtVerify();
+    const payload = await request.jwtVerify();
     
-    if (!request.user) {
+    if (!payload) {
       return reply.code(401).send({
         statusCode: 401,
         error: 'Unauthorized',
         message: 'Invalid or missing token',
       });
     }
+
+    request.user = payload as typeof request.user;
   } catch (error) {
     return reply.code(401).send({
       statusCode: 401,
@@ -48,7 +45,7 @@ export const roleMiddleware = (roles: string[]) => {
         message: 'Authentication required',
       });
     }
-    
+
     if (!roles.includes(request.user.role)) {
       return reply.code(403).send({
         statusCode: 403,

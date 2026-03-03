@@ -3,7 +3,7 @@ import * as controller from '../controllers/admin';
 import { authMiddleware } from '../middleware/auth';
 
 export const adminRoutes: FastifyPluginAsync = async (fastify) => {
-  // Auth routes (no auth required) - register WITHOUT middleware
+  // Auth routes (no auth required) - register BEFORE middleware hook
   fastify.post('/auth/login', {
     schema: {
       tags: ['Admin Auth'],
@@ -17,7 +17,6 @@ export const adminRoutes: FastifyPluginAsync = async (fastify) => {
         },
       },
     },
-    config: { skipAuth: true },
   }, controller.login);
 
   fastify.post('/auth/refresh', {
@@ -32,19 +31,14 @@ export const adminRoutes: FastifyPluginAsync = async (fastify) => {
         },
       },
     },
-    config: { skipAuth: true },
   }, controller.refreshToken);
 
-  // Protected routes - register middleware only for these
+  // Protected routes - add middleware hook BEFORE registering protected routes
   fastify.addHook('preHandler', async (request, reply) => {
-    // Skip auth for login/refresh routes
-    if (request.routeOptions.config?.skipAuth) {
-      return;
-    }
     await authMiddleware(request, reply);
   });
 
-  // Auth
+  // Auth (protected)
   fastify.get('/auth/me', controller.getMe);
   fastify.patch('/auth/profile', controller.updateProfile);
   fastify.post('/auth/change-password', controller.changePassword);

@@ -37,6 +37,10 @@ export function AdminLoginPage() {
     try {
       const response = await api.adminLogin(data.email, data.password);
       setAuth(response.accessToken, response.admin);
+      
+      // Додаємо невелику затримку, щоб переконатися, що дані збереглися в localStorage
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
       router.push('/admin/dashboard');
     } catch (err) {
       const message = (err as Error).message;

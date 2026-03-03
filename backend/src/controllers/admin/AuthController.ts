@@ -15,27 +15,27 @@ export const login = async (
   try {
     const { email, password } = request.body;
     const result = await authService.login({ email, password });
-    
+
     // Generate JWT tokens
-    const accessToken = request.server.jwt.sign({
+    const accessToken = await reply.jwtSign({
       id: result.admin._id,
       email: result.admin.email,
       role: result.admin.role,
       name: result.admin.name,
     }, { expiresIn: config.jwt.expiresIn });
-    
-    const refreshToken = request.server.jwt.sign({
+
+    const refreshToken = await reply.jwtSign({
       id: result.admin._id,
       type: 'refresh',
     }, { expiresIn: config.jwt.refreshExpiresIn });
-    
+
     return reply.send({
       admin: result.admin,
       accessToken,
       refreshToken,
     });
   } catch (error) {
-    if ((error as Error).message.includes('Invalid') || 
+    if ((error as Error).message.includes('Invalid') ||
         (error as Error).message.includes('deactivated')) {
       return reply.code(401).send({
         statusCode: 401,
@@ -59,12 +59,12 @@ export const refreshToken = async (
 ) => {
   try {
     const { refreshToken } = request.body;
-    
-    const decoded = request.server.jwt.verify(refreshToken) as {
+
+    const decoded = await reply.jwtVerify(refreshToken) as {
       id: string;
       type: string;
     };
-    
+
     if (decoded.type !== 'refresh') {
       return reply.code(401).send({
         statusCode: 401,
@@ -72,9 +72,9 @@ export const refreshToken = async (
         message: 'Invalid token type',
       });
     }
-    
+
     const admin = await authService.getAdminById(decoded.id);
-    
+
     if (!admin) {
       return reply.code(401).send({
         statusCode: 401,
@@ -82,14 +82,14 @@ export const refreshToken = async (
         message: 'Admin not found',
       });
     }
-    
-    const newAccessToken = request.server.jwt.sign({
+
+    const newAccessToken = await reply.jwtSign({
       id: admin._id,
       email: admin.email,
       role: admin.role,
       name: admin.name,
     }, { expiresIn: config.jwt.expiresIn });
-    
+
     return reply.send({
       accessToken: newAccessToken,
     });
