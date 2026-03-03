@@ -139,7 +139,7 @@ export function ServicesPage() {
                           {service.name}
                         </h3>
                         {service.category && (
-                          <span className="text-xs px-2 py-1 bg-primary-50 text-primary-700 rounded-full">
+                          <span className="text-xs px-2 py-1 bg-primary-50 text-primary-700 rounded-full text-center">
                             {service.category}
                           </span>
                         )}

@@ -136,7 +136,7 @@ export function ServicesSection() {
                         {service.name}
                       </h3>
                       {service.category && (
-                        <span className="text-xs px-2 py-0.5 sm:px-3 sm:py-1 bg-gradient-to-r from-primary-100 to-primary-50 text-primary-700 rounded-full font-medium border border-primary-200">
+                        <span className="text-xs px-2 py-0.5 sm:px-3 sm:py-1 bg-gradient-to-r from-primary-100 to-primary-50 text-primary-700 rounded-full font-medium border border-primary-200 text-center">
                           {service.category}
                         </span>
                       )}

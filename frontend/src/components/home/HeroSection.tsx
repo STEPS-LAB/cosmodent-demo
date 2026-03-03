@@ -84,10 +84,10 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className={`absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow ${mounted ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '1s' }}>
-        <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-secondary-300 rounded-full flex items-start justify-center p-1.5 sm:p-2">
-          <div className="w-1 h-1.5 sm:w-2 sm:h-2 bg-primary-500 rounded-full animate-slide-down" />
+      {/* Scroll indicator - only visible on desktop */}
+      <div className={`hidden sm:block absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow ${mounted ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '1s' }}>
+        <div className="w-6 h-10 border-2 border-secondary-300 rounded-full flex items-start justify-center p-2">
+          <div className="w-2 h-2 bg-primary-500 rounded-full animate-slide-down" />
         </div>
       </div>
     </section>
