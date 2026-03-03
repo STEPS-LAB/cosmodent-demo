@@ -34,7 +34,7 @@ export function AdminServicesPage() {
   }, [isAuthenticated, router]);
 
   const loadServices = () => {
-    api.get('/api/admin/services').then((data) => {
+    api.get<Service[]>('/api/admin/services').then((data) => {
       setServices(data);
       setLoading(false);
     });
@@ -46,7 +46,7 @@ export function AdminServicesPage() {
     try {
       await api.delete(`/api/admin/services/${id}`);
       loadServices();
-    } catch (error) {
+    } catch (_error) {
       alert('Помилка видалення');
     }
   };
@@ -55,7 +55,7 @@ export function AdminServicesPage() {
     try {
       await api.patch(`/api/admin/services/${id}`, { isActive: !isActive });
       loadServices();
-    } catch (error) {
+    } catch (_error) {
       alert('Помилка оновлення');
     }
   };
@@ -65,12 +65,12 @@ export function AdminServicesPage() {
     const newServices = [...services];
     [newServices[index], newServices[index - 1]] = [newServices[index - 1], newServices[index]];
     setServices(newServices);
-    
+
     try {
       await api.put('/api/admin/services/order', {
         ids: newServices.map((s) => s._id),
       });
-    } catch (error) {
+    } catch (_error) {
       loadServices();
     }
   };
@@ -80,12 +80,12 @@ export function AdminServicesPage() {
     const newServices = [...services];
     [newServices[index], newServices[index + 1]] = [newServices[index + 1], newServices[index]];
     setServices(newServices);
-    
+
     try {
       await api.put('/api/admin/services/order', {
         ids: newServices.map((s) => s._id),
       });
-    } catch (error) {
+    } catch (_error) {
       loadServices();
     }
   };

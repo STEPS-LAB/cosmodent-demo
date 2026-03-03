@@ -35,7 +35,10 @@ export function AdminLoginPage() {
     setError(null);
 
     try {
-      const response = await api.adminLogin(data.email, data.password);
+      const response = await api.adminLogin(data.email, data.password) as {
+        accessToken: string;
+        admin: { id: string; email: string; name: string; role: string };
+      };
       setAuth(response.accessToken, response.admin);
       
       // Додаємо невелику затримку, щоб переконатися, що дані збереглися в localStorage

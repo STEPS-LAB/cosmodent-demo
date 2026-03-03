@@ -38,7 +38,7 @@ export function AdminDashboardPage() {
       return;
     }
 
-    api.get('/api/admin/dashboard')
+    api.get<DashboardStats>('/api/admin/dashboard')
       .then((data) => {
         setStats(data);
         setLoading(false);

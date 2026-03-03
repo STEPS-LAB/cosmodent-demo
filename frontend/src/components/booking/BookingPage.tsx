@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState, use } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -9,7 +10,7 @@ import { api } from '@/services/api';
 import { useBookingStore } from '@/stores/bookingStore';
 
 const bookingSchema = z.object({
-  patientName: z.string().min(2, "Ім'я має містити щонайменше 2 символи"),
+  patientName: z.string().min(2, "Ім&apos;я має містити щонайменше 2 символи"),
   patientPhone: z.string().min(10, 'Введіть коректний номер телефону'),
   patientEmail: z.string().email('Введіть коректний email').optional().or(z.literal('')),
   patientNotes: z.string().max(500, 'Нотатки не можуть перевищувати 500 символів').optional(),
@@ -67,8 +68,9 @@ export function BookingPage() {
   // Load services
   useEffect(() => {
     api.getServices({ isActive: 'true' }).then((data) => {
-      setServices(data);
-      if (preselectedService && data.find((s: Service) => s._id === preselectedService)) {
+      const servicesData = data as Service[];
+      setServices(servicesData);
+      if (preselectedService && servicesData.find((s: Service) => s._id === preselectedService)) {
         setValue('service', preselectedService);
       }
     });
@@ -76,7 +78,9 @@ export function BookingPage() {
 
   // Load available dates
   useEffect(() => {
-    api.getAvailableDates().then(setAvailableDates);
+    api.getAvailableDates().then((data) => {
+      setAvailableDates(data as string[]);
+    });
   }, []);
 
   // Load time slots when date changes
@@ -85,7 +89,7 @@ export function BookingPage() {
       setLoadingSlots(true);
       api.getAvailableSlots(selectedDate, selectedService || undefined)
         .then((data) => {
-          setTimeSlots(data);
+          setTimeSlots(data as TimeSlot[]);
           setLoadingSlots(false);
         })
         .catch(() => {
@@ -123,23 +127,23 @@ export function BookingPage() {
 
   if (success) {
     return (
-      <div className="py-12 md:py-16">
+      <div className="py-12 sm:py-16">
         <div className="container-custom">
-          <div className="max-w-lg mx-auto text-center">
-            <div className="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-10 h-10 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="max-w-lg mx-auto text-center px-4">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <svg className="w-8 h-8 sm:w-10 sm:h-10 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h1 className="text-3xl font-bold text-secondary-900 mb-4">
+            <h1 className="text-2xl sm:text-3xl font-bold text-secondary-900 mb-4">
               Запис успішно створено!
             </h1>
-            <p className="text-secondary-600 mb-8">
-              Дякуємо за запис! Наш менеджер зв'яжеться з вами найближчим часом для підтвердження.
+            <p className="text-secondary-600 mb-8 text-sm sm:text-base">
+              Дякуємо за запис! Наш менеджер зв&apos;яжеться з вами найближчим часом для підтвердження.
             </p>
-            <a href="/" className="btn-primary">
+            <Link href="/" className="btn-primary w-full sm:w-auto inline-flex justify-center">
               Повернутися на головну
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -147,13 +151,13 @@ export function BookingPage() {
   }
 
   return (
-    <div className="py-12 md:py-16">
+    <div className="py-12 sm:py-16">
       <div className="container-custom">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4 text-center">
+        <div className="max-w-2xl mx-auto px-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary-900 mb-4 text-center">
             Запис на прийом
           </h1>
-          <p className="text-secondary-600 mb-8 text-center">
+          <p className="text-secondary-600 mb-8 text-center text-sm sm:text-base">
             Заповніть форму та оберіть зручний час для візиту
           </p>
 
@@ -179,9 +183,9 @@ export function BookingPage() {
             </div>
 
             {/* Personal Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="label-field">Ім'я *</label>
+                <label className="label-field">Ім&apos;я *</label>
                 <input
                   type="text"
                   {...register('patientName')}
@@ -250,20 +254,20 @@ export function BookingPage() {
               <div>
                 <label className="label-field">Час *</label>
                 {loadingSlots ? (
-                  <div className="text-center py-4 text-secondary-500">Завантаження...</div>
+                  <div className="text-center py-4 text-secondary-500 text-sm">Завантаження...</div>
                 ) : timeSlots.length === 0 ? (
-                  <div className="text-center py-4 text-secondary-500">
+                  <div className="text-center py-4 text-secondary-500 text-sm">
                     Немає доступних слотів на обрану дату
                   </div>
                 ) : (
-                  <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
                     {timeSlots.map((slot) => (
                       <button
                         key={slot.timeSlot}
                         type="button"
                         disabled={!slot.available}
                         onClick={() => setValue('timeSlot', slot.timeSlot)}
-                        className={`py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
+                        className={`py-2 px-2 sm:px-3 rounded-lg text-xs sm:text-sm font-medium transition-colors ${
                           !slot.available
                             ? 'bg-secondary-100 text-secondary-400 cursor-not-allowed'
                             : watch('timeSlot') === slot.timeSlot
@@ -284,7 +288,7 @@ export function BookingPage() {
 
             {/* Notes */}
             <div>
-              <label className="label-field">Нотатки (необов'язково)</label>
+              <label className="label-field">Нотатки (необов&apos;язково)</label>
               <textarea
                 {...register('patientNotes')}
                 className="input-field"
@@ -298,7 +302,7 @@ export function BookingPage() {
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}

@@ -28,27 +28,27 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-white/80 backdrop-blur-xl shadow-lg shadow-secondary-900/10 border-b border-white/20'
-          : 'bg-transparent'
+          ? 'bg-white/90 backdrop-blur-xl shadow-lg shadow-secondary-900/10 border-b border-white/20'
+          : 'bg-white/90 backdrop-blur-xl shadow-md shadow-secondary-900/5 lg:bg-transparent lg:shadow-none lg:border-none'
       }`}
     >
-      <nav className="container-custom py-4" aria-label="Global">
+      <nav className="container-custom py-3 sm:py-4" aria-label="Global">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
+          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-              <div className="relative w-12 h-12 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                <span className="text-white font-bold text-2xl">C</span>
+              <div className="relative w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <span className="text-white font-bold text-xl sm:text-2xl">C</span>
               </div>
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-secondary-900 via-secondary-800 to-secondary-900 bg-clip-text text-transparent group-hover:from-primary-600 group-hover:to-primary-500 transition-all duration-300">
+            <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-secondary-900 via-secondary-800 to-secondary-900 bg-clip-text text-transparent group-hover:from-primary-600 group-hover:to-primary-500 transition-all duration-300">
               CosmoDent
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-2">
+          <div className="hidden lg:flex lg:items-center lg:space-x-2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -62,7 +62,7 @@ export function Header() {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden md:flex">
+          <div className="hidden lg:flex">
             <Link
               href="/booking"
               className="relative inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-primary-600 to-primary-500 rounded-xl hover:from-primary-700 hover:to-primary-600 transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 hover:-translate-y-0.5 group overflow-hidden"
@@ -75,15 +75,16 @@ export function Header() {
           {/* Mobile menu button */}
           <button
             type="button"
-            className="md:hidden relative p-2 text-secondary-600 hover:text-primary-600 transition-colors duration-300"
+            className="lg:hidden relative p-2 text-secondary-600 hover:text-primary-600 transition-colors duration-300"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Відкрити меню"
           >
             <span className="absolute inset-0 bg-primary-50 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-300" />
             <span className="relative">
               {mobileMenuOpen ? (
-                <XMarkIcon className="w-7 h-7" />
+                <XMarkIcon className="w-6 h-6" />
               ) : (
-                <Bars3Icon className="w-7 h-7" />
+                <Bars3Icon className="w-6 h-6" />
               )}
             </span>
           </button>
@@ -91,25 +92,22 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-secondary-100 pt-4 animate-fade-in-down origin-top">
+          <div className="lg:hidden mt-4 pb-4 border-t border-secondary-100 pt-4 animate-fade-in-down origin-top">
             <div className="flex flex-col space-y-2">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="px-4 py-3 text-secondary-600 hover:text-primary-600 hover:bg-primary-50 rounded-xl font-medium transition-all duration-300 flex items-center justify-between group"
+                  className="px-4 py-3 text-secondary-600 rounded-xl font-medium flex items-center justify-between"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
-                  <svg className="w-5 h-5 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
                 </Link>
               ))}
               <div className="pt-2">
                 <Link
                   href="/booking"
-                  className="block w-full text-center px-6 py-4 text-base font-semibold text-white bg-gradient-to-r from-primary-600 to-primary-500 rounded-xl hover:from-primary-700 hover:to-primary-600 transition-all duration-300 shadow-lg shadow-primary-500/30"
+                  className="block w-full text-center px-6 py-4 text-base font-semibold text-white bg-gradient-to-r from-primary-600 to-primary-500 rounded-xl shadow-lg shadow-primary-500/30"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Записатися на прийом
