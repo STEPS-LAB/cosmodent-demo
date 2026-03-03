@@ -11,16 +11,16 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'CosmoDent - Сучасна Стоматологія у Києві',
+  title: 'КОСМОДЕНТ - Сучасна Стоматологія у Києві',
   description: 'Професійні стоматологічні послуги. Імплантація, відбілювання, лікування зубів. Сучасне обладнання та досвідчені лікарі.',
-  keywords: ['стоматологія', 'імплантація', 'лікування зубів', 'Київ', 'CosmoDent'],
-  authors: [{ name: 'CosmoDent' }],
+  keywords: ['стоматологія', 'імплантація', 'лікування зубів', 'Київ', 'КОСМОДЕНТ'],
+  authors: [{ name: 'КОСМОДЕНТ' }],
   openGraph: {
-    title: 'CosmoDent - Сучасна Стоматологія',
+    title: 'КОСМОДЕНТ - Сучасна Стоматологія',
     description: 'Професійні стоматологічні послуги у Києві',
     type: 'website',
     locale: 'uk_UA',
-    siteName: 'CosmoDent',
+    siteName: 'КОСМОДЕНТ',
   },
   robots: {
     index: true,

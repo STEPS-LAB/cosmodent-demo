@@ -79,7 +79,7 @@
 
   /* Glow effects */
   .glow-primary {
-    box-shadow: 0 0 40px rgba(16, 185, 129, 0.3), 0 0 80px rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 40px rgba(78, 196, 239, 0.3), 0 0 80px rgba(78, 196, 239, 0.1);
   }
 
   .glow-gold {
@@ -125,7 +125,7 @@
   .border-animated::before {
     @apply content-[''] absolute inset-0 rounded-2xl;
     padding: 2px;
-    background: linear-gradient(45deg, #10b981, #34d399, #10b981);
+    background: linear-gradient(45deg, #4ec4ef, #7fe3f9, #4ec4ef);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -145,10 +145,10 @@
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 20px rgba(78, 196, 239, 0.2);
   }
   50% {
-    box-shadow: 0 0 40px rgba(16, 185, 129, 0.4), 0 0 80px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 40px rgba(78, 196, 239, 0.4), 0 0 80px rgba(78, 196, 239, 0.2);
   }
 }
 

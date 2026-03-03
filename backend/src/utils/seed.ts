@@ -295,14 +295,15 @@ export const seedDatabase = async () => {
     ]);
     logger.info('Cleared existing data');
 
-    // Create admin user
+    // Create admin user with username
     await Admin.create({
-      email: 'admin@cosmodent.ua',
-      password: 'Admin123!',
+      email: 'admin@kosmodent.ua',
+      username: 'admin',
+      password: '12345678',
       name: 'Адміністратор',
       role: 'super-admin',
     });
-    logger.info('Created admin user');
+    logger.info('Created admin user (admin/12345678)');
 
     // Create services
     await Service.insertMany(services);
@@ -314,10 +315,10 @@ export const seedDatabase = async () => {
 
     // Create settings
     await Settings.create({
-      clinicName: 'CosmoDent',
+      clinicName: 'КОСМОДЕНТ',
       clinicDescription: 'Сучасна стоматологічна клініка з інноваційними технологіями лікування. Ми дбаємо про вашу посмішку та здоров\'я.',
       phone: '+380 (44) 123-45-67',
-      email: 'info@cosmodent.ua',
+      email: 'info@kosmodent.ua',
       address: {
         street: 'вул. Хрещатик, 1',
         city: 'Київ',
@@ -329,9 +330,9 @@ export const seedDatabase = async () => {
         },
       },
       seo: {
-        title: 'CosmoDent - Сучасна Стоматологія у Києві',
+        title: 'КОСМОДЕНТ - Сучасна Стоматологія у Києві',
         description: 'Професійні стоматологічні послуги. Імплантація, відбілювання, лікування зубів. Сучасне обладнання та досвідчені лікарі.',
-        keywords: ['стоматологія', 'імплантація', 'лікування зубів', 'Київ', 'CosmoDent'],
+        keywords: ['стоматологія', 'імплантація', 'лікування зубів', 'Київ', 'КОСМОДЕНТ'],
       },
       bookingSettings: {
         slotDuration: 30,

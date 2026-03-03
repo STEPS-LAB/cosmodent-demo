@@ -24,8 +24,8 @@ const contactItems = [
   {
     icon: EnvelopeIcon,
     title: 'Email',
-    content: 'info@cosmodent.ua',
-    href: 'mailto:info@cosmodent.ua',
+    content: 'info@kosmodent.ua',
+    href: 'mailto:info@kosmodent.ua',
   },
   {
     icon: ClockIcon,

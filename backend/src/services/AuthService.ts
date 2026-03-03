@@ -17,32 +17,38 @@ export class AuthService {
     refreshToken: string;
   }> {
     try {
-      const admin = await Admin.findOne({ email: data.email }).select('+password');
-      
+      // Шукаємо адміна по email або username
+      const admin = await Admin.findOne({
+        $or: [
+          { email: data.email },
+          { username: data.email },
+        ],
+      }).select('+password');
+
       if (!admin) {
         throw new Error('Invalid email or password');
       }
-      
+
       if (!admin.isActive) {
         throw new Error('Account is deactivated');
       }
-      
+
       const isPasswordValid = await admin.comparePassword(data.password);
-      
+
       if (!isPasswordValid) {
         throw new Error('Invalid email or password');
       }
-      
+
       // Update last login
       admin.lastLogin = new Date();
       await admin.save();
-      
+
       // Generate tokens (using fastify-jwt in controller)
       const adminData = admin.toObject();
       delete (adminData as { password?: string }).password;
-      
+
       logger.info(`Admin logged in: ${admin.email}`);
-      
+
       return {
         admin: adminData as Omit<IAdmin, 'password'>,
         accessToken: '', // Will be set in controller

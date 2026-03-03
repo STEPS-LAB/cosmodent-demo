@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { AdminLoginPage } from '@/components/admin/AdminLoginPage';
 
 export const metadata: Metadata = {
-  title: 'Адмін-панель - CosmoDent',
-  description: 'Вхід до адмін-панелі CosmoDent',
+  title: 'Адмін-панель - КОСМОДЕНТ',
+  description: 'Вхід до адмін-панелі КОСМОДЕНТ',
   robots: {
     index: false,
     follow: false,

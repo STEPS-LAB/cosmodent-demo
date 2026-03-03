@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAdminStore } from '@/stores/adminStore';
@@ -32,12 +32,39 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { user, logout, isAuthenticated } = useAdminStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const handleLogout = () => {
     logout();
     router.push('/admin/login');
   };
 
+  // Перевіряємо, чи потрібно перенаправити на логін
+  useEffect(() => {
+    if (!isAuthenticated && pathname !== '/admin/login') {
+      router.push('/admin/login');
+    }
+  }, [isAuthenticated, pathname, router]);
+
+  // Перевіряємо монтаж для уникнення гідратації
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Якщо не автентифіковані і на сторінці логіну - показуємо тільки контент
+  if (!isMounted) {
+    return null;
+  }
+
+  if (!isAuthenticated && pathname === '/admin/login') {
+    return (
+      <div className="min-h-screen bg-secondary-50 flex items-center justify-center py-12 px-4">
+        {children}
+      </div>
+    );
+  }
+
+  // Якщо не автентифіковані - не показуємо нічого (відбудеться редірект)
   if (!isAuthenticated) {
     return null;
   }
@@ -62,10 +89,13 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           {/* Logo */}
           <div className="flex items-center justify-between h-16 px-4 border-b border-secondary-200">
             <Link href="/admin/dashboard" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">C</span>
+              <div className="w-20 h-12 rounded-xl overflow-hidden">
+                <img
+                  src="https://res2.weblium.site/res/66434ff5faf4a6dea272b611/664361fe63d29abd486d11da_optimized.webp"
+                  alt="КОСМОДЕНТ"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <span className="font-semibold text-secondary-900">CosmoDent</span>
             </Link>
             <button
               className="lg:hidden p-2"

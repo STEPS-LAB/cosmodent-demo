@@ -31,14 +31,17 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="col-span-1 sm:col-span-1">
-            <Link href="/" className="flex items-center space-x-2 sm:space-x-3 mb-6 group">
+            <Link href="/" className="inline-block mb-6 group">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                  <span className="text-white font-bold text-xl sm:text-2xl">C</span>
+                <div className="relative w-32 h-20 sm:w-40 sm:h-24 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 overflow-hidden">
+                  <img
+                    src="https://res2.weblium.site/res/66434ff5faf4a6dea272b611/664361fe63d29abd486d11da_optimized.webp"
+                    alt="КОСМОДЕНТ"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
               </div>
-              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white via-secondary-100 to-white bg-clip-text text-transparent">CosmoDent</span>
             </Link>
             <p className="text-secondary-400 text-sm leading-relaxed mb-6">
               Сучасна стоматологічна клініка з інноваційними технологіями лікування.
@@ -129,8 +132,8 @@ export function Footer() {
                 <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
                   <EnvelopeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <a href="mailto:info@cosmodent.ua" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
-                  info@cosmodent.ua
+                <a href="mailto:info@kosmodent.ua" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
+                  info@kosmodent.ua
                 </a>
               </li>
             </ul>
@@ -141,7 +144,7 @@ export function Footer() {
         <div className="border-t border-white/10 mt-10 sm:mt-12 pt-6 sm:pt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-secondary-500 text-xs sm:text-sm">
-              © {new Date().getFullYear()} CosmoDent. Всі права захищено.
+              © {new Date().getFullYear()} КОСМОДЕНТ. Всі права захищено.
             </p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
               <Link href="#" className="text-secondary-500 hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group">

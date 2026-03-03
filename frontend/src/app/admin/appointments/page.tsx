@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { AdminAppointmentsPage } from '@/components/admin/appointments/AdminAppointmentsPage';
 
 export const metadata: Metadata = {
-  title: 'Записи - CosmoDent Admin',
+  title: 'Записи - КОСМОДЕНТ Admin',
   robots: {
     index: false,
     follow: false,

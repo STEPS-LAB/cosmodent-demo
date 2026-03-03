@@ -30,6 +30,7 @@ export function AdminDashboardPage() {
   const { isAuthenticated, user, token } = useAdminStore();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Перевіряємо автентифікацію
@@ -38,18 +39,84 @@ export function AdminDashboardPage() {
       return;
     }
 
-    api.get<DashboardStats>('/api/admin/dashboard')
-      .then((data) => {
-        setStats(data);
+    // Отримуємо статистику з API
+    Promise.all([
+      api.get<any>('/api/appointments').catch(() => []),
+      api.get<any>('/api/reviews').catch(() => []),
+      api.get<any>('/api/services').catch(() => []),
+      api.get<any>('/api/doctors').catch(() => []),
+    ])
+      .then(([appointments, reviews, services, doctors]) => {
+        const now = new Date();
+        const today = now.toISOString().split('T')[0];
+        
+        const todayAppointments = appointments.filter((a: any) => 
+          a.date === today
+        ).length;
+        
+        const upcomingAppointments = appointments.filter((a: any) => 
+          a.date >= today && a.status !== 'cancelled'
+        ).length;
+
+        const newAppointments = appointments.filter((a: any) => 
+          a.status === 'pending'
+        ).length;
+
+        const confirmedAppointments = appointments.filter((a: any) => 
+          a.status === 'confirmed'
+        ).length;
+
+        const completedAppointments = appointments.filter((a: any) => 
+          a.status === 'completed'
+        ).length;
+
+        const cancelledAppointments = appointments.filter((a: any) => 
+          a.status === 'cancelled'
+        ).length;
+
+        const activeReviews = reviews.filter((r: any) => 
+          r.status === 'approved' || r.status === 'active'
+        ).length;
+
+        const totalRating = reviews.reduce((sum: number, r: any) => 
+          sum + (r.rating || 0), 0
+        );
+        const averageRating = reviews.length > 0 
+          ? (totalRating / reviews.length).toFixed(1) 
+          : 0;
+
+        setStats({
+          appointments: {
+            totalAppointments: appointments.length,
+            newAppointments,
+            confirmedAppointments,
+            completedAppointments,
+            cancelledAppointments,
+            todayAppointments,
+            upcomingAppointments,
+          },
+          reviews: {
+            totalReviews: reviews.length,
+            activeReviews,
+            averageRating: parseFloat(averageRating as string),
+          },
+          services: services.length,
+          doctors: doctors.length,
+        });
         setLoading(false);
       })
-      .catch(() => {
-        // Якщо отримали помилку 401, робимо logout і редирект
-        router.push('/admin/login');
+      .catch((err) => {
+        console.error('Dashboard error:', err);
+        setError('Не вдалося завантажити дані');
+        setLoading(false);
       });
   }, [isAuthenticated, token, router]);
 
-  if (!isAuthenticated || loading) {
+  if (!isAuthenticated || !token) {
+    return null;
+  }
+
+  if (loading) {
     return (
       <AdminLayout>
         <div className="animate-pulse space-y-4">
@@ -64,8 +131,20 @@ export function AdminDashboardPage() {
     );
   }
 
-  if (!stats) {
-    return null;
+  if (error || !stats) {
+    return (
+      <AdminLayout>
+        <div className="text-center py-12">
+          <p className="text-secondary-600">{error || 'Не вдалося завантажити дані'}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 btn-primary"
+          >
+            Оновити сторінку
+          </button>
+        </div>
+      </AdminLayout>
+    );
   }
 
   const statCards = [

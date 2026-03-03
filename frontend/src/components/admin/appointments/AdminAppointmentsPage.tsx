@@ -68,15 +68,18 @@ export function AdminAppointmentsPage() {
 
   const loadAppointments = () => {
     const query = filter !== 'all' ? `?status=${filter}` : '';
-    api.get<Appointment[]>(`/api/admin/appointments${query}`).then((data) => {
+    api.getAdminAppointments(filter !== 'all' ? filter : undefined).then((data) => {
       setAppointments(data);
+      setLoading(false);
+    }).catch(() => {
+      setAppointments([]);
       setLoading(false);
     });
   };
 
   const updateStatus = async (id: string, status: string) => {
     try {
-      await api.patch(`/api/admin/appointments/${id}/status`, { status });
+      await api.updateAppointmentStatus(id, status);
       loadAppointments();
     } catch (_error) {
       alert('Помилка оновлення статусу');

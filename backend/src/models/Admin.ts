@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 
 export interface IAdmin extends Document {
   email: string;
+  username?: string;
   password: string;
   name: string;
   role: 'super-admin' | 'admin' | 'manager';
@@ -21,7 +22,13 @@ const adminSchema = new Schema<IAdmin>(
       unique: true,
       lowercase: true,
       trim: true,
-      match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email'],
+    },
+    username: {
+      type: String,
+      unique: true,
+      sparse: true,
+      lowercase: true,
+      trim: true,
     },
     password: {
       type: String,

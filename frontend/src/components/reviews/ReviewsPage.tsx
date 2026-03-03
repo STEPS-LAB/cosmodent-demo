@@ -43,7 +43,7 @@ export function ReviewsPage() {
             Відгуки пацієнтів
           </h1>
           <p className="text-lg text-secondary-600">
-            Дізнайтеся, що кажуть наші пацієнти про лікування в CosmoDent
+            Дізнайтеся, що кажуть наші пацієнти про лікування в КОСМОДЕНТ
           </p>
         </div>
 

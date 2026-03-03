@@ -34,8 +34,11 @@ export function AdminServicesPage() {
   }, [isAuthenticated, router]);
 
   const loadServices = () => {
-    api.get<Service[]>('/api/admin/services').then((data) => {
+    api.getAdminServices().then((data) => {
       setServices(data);
+      setLoading(false);
+    }).catch(() => {
+      setServices([]);
       setLoading(false);
     });
   };
@@ -44,7 +47,7 @@ export function AdminServicesPage() {
     if (!confirm('Ви впевнені, що хочете видалити цю послугу?')) return;
 
     try {
-      await api.delete(`/api/admin/services/${id}`);
+      await api.deleteService(id);
       loadServices();
     } catch (_error) {
       alert('Помилка видалення');
@@ -53,7 +56,7 @@ export function AdminServicesPage() {
 
   const toggleActive = async (id: string, isActive: boolean) => {
     try {
-      await api.patch(`/api/admin/services/${id}`, { isActive: !isActive });
+      await api.updateService(id, { isActive: !isActive });
       loadServices();
     } catch (_error) {
       alert('Помилка оновлення');
@@ -67,9 +70,7 @@ export function AdminServicesPage() {
     setServices(newServices);
 
     try {
-      await api.put('/api/admin/services/order', {
-        ids: newServices.map((s) => s._id),
-      });
+      await api.updateServicesOrder(newServices.map((s) => s._id));
     } catch (_error) {
       loadServices();
     }
@@ -82,9 +83,7 @@ export function AdminServicesPage() {
     setServices(newServices);
 
     try {
-      await api.put('/api/admin/services/order', {
-        ids: newServices.map((s) => s._id),
-      });
+      await api.updateServicesOrder(newServices.map((s) => s._id));
     } catch (_error) {
       loadServices();
     }

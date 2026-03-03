@@ -18,14 +18,12 @@ interface AdminState {
 
 export const useAdminStore = create<AdminState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       token: null,
       user: null,
-      setAuth: (token, user) => set({ token, user }),
-      logout: () => set({ token: null, user: null }),
-      get isAuthenticated() {
-        return !!(get().token && get().user);
-      },
+      setAuth: (token, user) => set({ token, user, isAuthenticated: true }),
+      logout: () => set({ token: null, user: null, isAuthenticated: false }),
+      isAuthenticated: false,
     }),
     {
       name: 'admin-storage',

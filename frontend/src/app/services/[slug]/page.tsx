@@ -15,12 +15,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     );
     
     return {
-      title: `${service.name} - CosmoDent`,
+      title: `${service.name} - КОСМОДЕНТ`,
       description: service.seoDescription || service.shortDescription,
     };
   } catch {
     return {
-      title: 'Послуга не знайдена - CosmoDent',
+      title: 'Послуга не знайдена - КОСМОДЕНТ',
     };
   }
 }

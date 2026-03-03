@@ -1,12 +1,29 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
+// Отримуємо токен з localStorage
+function getAuthToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  const adminStorage = localStorage.getItem('admin-storage');
+  if (adminStorage) {
+    try {
+      const parsed = JSON.parse(adminStorage);
+      return parsed.state?.token || null;
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
 async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const url = `${API_URL}${endpoint}`;
-  
+  const token = getAuthToken();
+
   const response = await fetch(url, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options?.headers,
     },
   });
@@ -126,4 +143,72 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     }),
+
+  // Admin Dashboard
+  getDashboardStats: () =>
+    fetchApi('/api/admin/dashboard'),
+
+  // Admin Services
+  getAdminServices: () =>
+    fetchApi('/api/admin/services'),
+  createService: (data: any) =>
+    fetchApi('/api/admin/services', { method: 'POST', body: JSON.stringify(data) }),
+  updateService: (id: string, data: any) =>
+    fetchApi(`/api/admin/services/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+  deleteService: (id: string) =>
+    fetchApi(`/api/admin/services/${id}`, { method: 'DELETE' }),
+  updateServicesOrder: (ids: string[]) =>
+    fetchApi('/api/admin/services/order', { method: 'PUT', body: JSON.stringify({ ids }) }),
+
+  // Admin Appointments
+  getAdminAppointments: (status?: string) => {
+    const query = status && status !== 'all' ? `?status=${status}` : '';
+    return fetchApi(`/api/admin/appointments${query}`);
+  },
+  updateAppointmentStatus: (id: string, status: string) =>
+    fetchApi(`/api/admin/appointments/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
+  cancelAppointment: (id: string) =>
+    fetchApi(`/api/admin/appointments/${id}/cancel`, { method: 'PATCH' }),
+
+  // Admin Doctors
+  getAdminDoctors: () =>
+    fetchApi('/api/admin/doctors'),
+  createDoctor: (data: any) =>
+    fetchApi('/api/admin/doctors', { method: 'POST', body: JSON.stringify(data) }),
+  updateDoctor: (id: string, data: any) =>
+    fetchApi(`/api/admin/doctors/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+  deleteDoctor: (id: string) =>
+    fetchApi(`/api/admin/doctors/${id}`, { method: 'DELETE' }),
+
+  // Admin Reviews
+  getAdminReviews: () =>
+    fetchApi('/api/admin/reviews'),
+  approveReview: (id: string) =>
+    fetchApi(`/api/admin/reviews/${id}/approve`, { method: 'PATCH' }),
+  rejectReview: (id: string) =>
+    fetchApi(`/api/admin/reviews/${id}/reject`, { method: 'PATCH' }),
+  deleteReview: (id: string) =>
+    fetchApi(`/api/admin/reviews/${id}`, { method: 'DELETE' }),
+  getReviewStatistics: () =>
+    fetchApi('/api/admin/reviews/statistics'),
+
+  // Admin Blog
+  getAdminBlogPosts: () =>
+    fetchApi('/api/admin/blog'),
+  createBlogPost: (data: any) =>
+    fetchApi('/api/admin/blog', { method: 'POST', body: JSON.stringify(data) }),
+  updateBlogPost: (id: string, data: any) =>
+    fetchApi(`/api/admin/blog/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+  deleteBlogPost: (id: string) =>
+    fetchApi(`/api/admin/blog/${id}`, { method: 'DELETE' }),
+  publishBlogPost: (id: string) =>
+    fetchApi(`/api/admin/blog/${id}/publish`, { method: 'PATCH' }),
+  unpublishBlogPost: (id: string) =>
+    fetchApi(`/api/admin/blog/${id}/unpublish`, { method: 'PATCH' }),
+
+  // Admin Settings
+  getAdminSettings: () =>
+    fetchApi('/api/admin/settings'),
+  updateSettings: (data: any) =>
+    fetchApi('/api/admin/settings', { method: 'PATCH', body: JSON.stringify(data) }),
 };
