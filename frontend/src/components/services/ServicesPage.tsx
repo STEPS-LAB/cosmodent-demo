@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLayoutEffect } from 'react';
 import Link from 'next/link';
 import { api } from '@/services/api';
 
@@ -20,6 +20,12 @@ export function ServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [initialHash, setInitialHash] = useState<string>('');
+
+  // Зберігаємо hash при першому завантаженні (useLayoutEffect виконується до рендеру)
+  useLayoutEffect(() => {
+    setInitialHash(window.location.hash.replace('#', ''));
+  }, []);
 
   useEffect(() => {
     api.getServices({ isActive: 'true' }).then((data) => {
@@ -29,6 +35,51 @@ export function ServicesPage() {
   }, []);
 
   const categories = ['all', ...Array.from(new Set(services.map((s) => s.category).filter(Boolean)))];
+
+  // Обробка початкового hash при завантаженні послуг
+  useEffect(() => {
+    if (services.length === 0 || !initialHash) return;
+    
+    // Мапінг якорів на категорії
+    const categoryMap: Record<string, string> = {
+      'prosthetics': 'Протезування',
+      'orthodontics': 'Ортодонтія',
+      'treatment': 'Лікування зубів',
+      'hygiene': 'Професійна гігієна',
+      'implantatsiya': 'Імплантація',
+    };
+    
+    const category = categoryMap[initialHash];
+    
+    if (category && categories.includes(category)) {
+      setSelectedCategory(category);
+    }
+  }, [services, categories, initialHash]);
+
+  // Обробка змін hash після завантаження
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (services.length === 0) return;
+      
+      const hash = window.location.hash.replace('#', '');
+      const categoryMap: Record<string, string> = {
+        'prosthetics': 'Протезування',
+        'orthodontics': 'Ортодонтія',
+        'treatment': 'Лікування зубів',
+        'hygiene': 'Професійна гігієна',
+        'implantatsiya': 'Імплантація',
+      };
+      
+      const category = categoryMap[hash];
+      
+      if (category && categories.includes(category)) {
+        setSelectedCategory(category);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [services, categories]);
 
   const filteredServices =
     selectedCategory === 'all'
