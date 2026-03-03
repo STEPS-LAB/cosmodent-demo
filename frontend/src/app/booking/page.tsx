@@ -1,4 +1,5 @@
-import { Metadata, Suspense } from 'next';
+import { Metadata } from 'next';
+import { Suspense } from 'react';
 import { BookingPage } from '@/components/booking/BookingPage';
 
 export const metadata: Metadata = {
