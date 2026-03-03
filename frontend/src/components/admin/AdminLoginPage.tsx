@@ -75,12 +75,15 @@ export function AdminLoginPage() {
     <div className="max-w-md w-full">
       {/* Logo */}
       <div className="text-center mb-8">
-        <div className="w-48 h-28 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 overflow-hidden shadow-lg">
-          <img
-            src="https://res2.weblium.site/res/66434ff5faf4a6dea272b611/664361fe63d29abd486d11da_optimized.webp"
-            alt="КОСМОДЕНТ"
-            className="w-full h-full object-contain"
-          />
+        <div className="inline-flex items-center gap-3 mb-4">
+          <div className="w-14 h-14 flex-shrink-0">
+            <img
+              src="/logo.png"
+              alt="КОСМОДЕНТ"
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <span className="text-2xl font-bold text-secondary-900">КОСМОДЕНТ</span>
         </div>
         <h1 className="text-2xl font-bold text-secondary-900">Адмін-панель</h1>
         <p className="text-secondary-600 mt-2">Вхід до системи управління</p>

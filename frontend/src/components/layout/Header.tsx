@@ -35,17 +35,18 @@ export function Header() {
       <nav className="container-custom py-3 sm:py-4" aria-label="Global">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center group">
+          <Link href="/" className="flex items-center gap-3 group">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-              <div className="relative w-28 h-16 sm:w-32 sm:h-20 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center group-hover:scale-105 transition-all duration-300">
                 <img
-                  src="https://res2.weblium.site/res/66434ff5faf4a6dea272b611/664361fe63d29abd486d11da_optimized.webp"
+                  src="/logo.png"
                   alt="КОСМОДЕНТ"
                   className="w-full h-full object-contain"
                 />
               </div>
             </div>
+            <span className="text-xl sm:text-2xl font-bold text-secondary-900 group-hover:text-primary-600 transition-colors duration-300">КОСМОДЕНТ</span>
           </Link>
 
           {/* Desktop Navigation */}

@@ -57,7 +57,7 @@ export function BookingCTA() {
             </Link>
 
             <a
-              href="tel:+380441234567"
+              href="tel:+380679082629"
               className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-4 sm:py-5 text-base font-semibold text-white border-2 border-white/50 rounded-xl hover:bg-white/10 hover:border-white transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 w-full sm:w-auto"
             >
               <span className="flex items-center gap-2">

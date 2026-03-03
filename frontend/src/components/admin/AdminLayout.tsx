@@ -88,14 +88,15 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="flex items-center justify-between h-16 px-4 border-b border-secondary-200">
-            <Link href="/admin/dashboard" className="flex items-center space-x-2">
-              <div className="w-20 h-12 rounded-xl overflow-hidden">
+            <Link href="/admin/dashboard" className="flex items-center gap-2">
+              <div className="w-10 h-10 flex-shrink-0">
                 <img
-                  src="https://res2.weblium.site/res/66434ff5faf4a6dea272b611/664361fe63d29abd486d11da_optimized.webp"
+                  src="/logo.png"
                   alt="КОСМОДЕНТ"
                   className="w-full h-full object-contain"
                 />
               </div>
+              <span className="text-lg font-bold text-secondary-900">КОСМОДЕНТ</span>
             </Link>
             <button
               className="lg:hidden p-2"

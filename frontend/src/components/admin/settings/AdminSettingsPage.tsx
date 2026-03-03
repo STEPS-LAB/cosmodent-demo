@@ -38,12 +38,12 @@ export function AdminSettingsPage() {
       // Якщо немає налаштувань, використовуємо значення за замовчуванням
       setSettings({
         clinicName: 'КОСМОДЕНТ',
-        phone: '+380 (44) 123-45-67',
+        phone: '+38 (067) 908 26 29',
         email: 'info@kosmodent.ua',
-        address: 'вул. Хрещатик, 1, Київ, 01001',
+        address: 'м. Житомир, вулиця Східна, 107/86',
         workingHours: [
-          { day: 'Пн - Пт', hours: '09:00 - 18:00' },
-          { day: 'Сб', hours: '10:00 - 15:00' },
+          { day: 'Пн - Пт', hours: '08:00 - 19:00' },
+          { day: 'Сб', hours: '08:00 - 14:00' },
           { day: 'Нд', hours: 'Вихідний' },
         ],
         socialLinks: {},

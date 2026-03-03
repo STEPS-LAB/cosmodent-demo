@@ -50,24 +50,33 @@ export class SettingsService {
    */
   private async createDefaultSettings(): Promise<ISettings> {
     const defaultSettings: Partial<ISettings> = {
-      clinicName: 'CosmoDent',
+      clinicName: 'КОСМОДЕНТ',
       clinicDescription: 'Сучасна стоматологічна клініка з інноваційними технологіями лікування',
-      phone: '+380 (44) 123-45-67',
-      email: 'info@cosmodent.ua',
+      phone: '+38 (067) 908 26 29',
+      email: 'info@kosmodent.ua',
       address: {
-        street: 'вул. Хрещатик, 1',
-        city: 'Київ',
-        zipCode: '01001',
+        street: 'вулиця Східна, 107/86',
+        city: 'Житомир',
+        zipCode: '10001',
         country: 'Україна',
         coordinates: {
-          lat: 50.4501,
-          lng: 30.5234,
+          lat: 50.2547,
+          lng: 28.6587,
         },
       },
+      workingHours: {
+        monday: { open: '08:00', close: '19:00', isClosed: false },
+        tuesday: { open: '08:00', close: '19:00', isClosed: false },
+        wednesday: { open: '08:00', close: '19:00', isClosed: false },
+        thursday: { open: '08:00', close: '19:00', isClosed: false },
+        friday: { open: '08:00', close: '19:00', isClosed: false },
+        saturday: { open: '08:00', close: '14:00', isClosed: false },
+        sunday: { open: '08:00', close: '19:00', isClosed: true },
+      },
       seo: {
-        title: 'CosmoDent - Сучасна Стоматологія у Києві',
+        title: 'КОСМОДЕНТ - Сучасна Стоматологія у Житомирі',
         description: 'Професійні стоматологічні послуги. Імплантація, відбілювання, лікування зубів. Сучасне обладнання та досвідчені лікарі.',
-        keywords: ['стоматологія', 'імплантація', 'лікування зубів', 'Київ'],
+        keywords: ['стоматологія', 'імплантація', 'лікування зубів', 'Житомир'],
       },
       bookingSettings: {
         slotDuration: 30,

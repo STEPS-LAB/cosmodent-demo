@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { PhoneIcon, EnvelopeIcon, MapPinIcon } from '@heroicons/react/24/outline';
+import { PhoneIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 const services = [
   { name: 'Імплантація', href: '/services/implantatsiya-zubiv' },
@@ -31,17 +31,18 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="col-span-1 sm:col-span-1">
-            <Link href="/" className="inline-block mb-6 group">
+            <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-                <div className="relative w-32 h-20 sm:w-40 sm:h-24 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
+                <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center group-hover:scale-105 transition-all duration-300">
                   <img
-                    src="https://res2.weblium.site/res/66434ff5faf4a6dea272b611/664361fe63d29abd486d11da_optimized.webp"
+                    src="/logo.png"
                     alt="КОСМОДЕНТ"
                     className="w-full h-full object-contain"
                   />
                 </div>
               </div>
+              <span className="text-xl sm:text-2xl font-bold text-white group-hover:text-primary-400 transition-colors duration-300">КОСМОДЕНТ</span>
             </Link>
             <p className="text-secondary-400 text-sm leading-relaxed mb-6">
               Сучасна стоматологічна клініка з інноваційними технологіями лікування.
@@ -117,24 +118,31 @@ export function Footer() {
                   <MapPinIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <span className="text-secondary-400 text-sm pt-1">
-                  вул. Хрещатик, 1, Київ, 01001
+                  м. Житомир<br />
+                  вулиця Східна, 107/86
                 </span>
               </li>
               <li className="flex items-center gap-3 group">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
                   <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <a href="tel:+380441234567" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
-                  +380 (44) 123-45-67
-                </a>
+                <div className="flex flex-col gap-1">
+                  <a href="tel:+380679082629" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
+                    +38 (067) 908 26 29
+                  </a>
+                  <a href="tel:+380412447307" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
+                    +38 (041) 244 73 07
+                  </a>
+                </div>
               </li>
               <li className="flex items-center gap-3 group">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
-                  <EnvelopeIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <ClockIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <a href="mailto:info@kosmodent.ua" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
-                  info@kosmodent.ua
-                </a>
+                <div className="text-secondary-400 text-sm">
+                  <div>Пн-Пт: 08:00-19:00</div>
+                  <div>Сб: 08:00-14:00</div>
+                </div>
               </li>
             </ul>
           </div>

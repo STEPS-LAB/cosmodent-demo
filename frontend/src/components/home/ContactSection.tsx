@@ -3,8 +3,8 @@
 import { PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 const workingHours = [
-  { day: 'Пн - Пт', hours: '09:00 - 18:00' },
-  { day: 'Сб', hours: '10:00 - 15:00' },
+  { day: 'Пн - Пт', hours: '08:00 - 19:00' },
+  { day: 'Сб', hours: '08:00 - 14:00' },
   { day: 'Нд', hours: 'Вихідний' },
 ];
 
@@ -12,14 +12,14 @@ const contactItems = [
   {
     icon: MapPinIcon,
     title: 'Адреса',
-    content: 'вул. Хрещатик, 1, Київ, 01001',
+    content: 'м. Житомир, вулиця Східна, 107/86',
     href: undefined,
   },
   {
     icon: PhoneIcon,
     title: 'Телефон',
-    content: '+380 (44) 123-45-67',
-    href: 'tel:+380441234567',
+    content: '+38 (067) 908 26 29',
+    href: 'tel:+380679082629',
   },
   {
     icon: EnvelopeIcon,
@@ -116,7 +116,7 @@ export function ContactSection() {
                     Інтерактивна карта буде доступна тут
                   </p>
                   <p className="text-xs sm:text-sm text-secondary-500">
-                    вул. Хрещатик, 1, Київ
+                    м. Житомир, вулиця Східна, 107/86
                   </p>
 
                   {/* Decorative map pins */}

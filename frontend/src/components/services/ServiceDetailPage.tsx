@@ -135,7 +135,7 @@ export function ServiceDetailPage({ slug }: ServiceDetailPageProps) {
                 Записатися
               </Link>
               <a
-                href="tel:+380441234567"
+                href="tel:+380679082629"
                 className="btn-outline w-full block text-center"
               >
                 Зателефонувати
