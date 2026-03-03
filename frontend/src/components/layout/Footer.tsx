@@ -44,7 +44,7 @@ export function Footer() {
               </div>
               <span className="text-xl sm:text-2xl font-bold text-white group-hover:text-primary-400 transition-colors duration-300">КОСМОДЕНТ</span>
             </Link>
-            <p className="text-secondary-400 text-sm leading-relaxed mb-6">
+            <p className="text-white/70 text-sm leading-relaxed mb-6">
               Сучасна стоматологічна клініка з інноваційними технологіями лікування.
               Турбота про вашу посмішку — наш пріоритет.
             </p>
@@ -55,7 +55,7 @@ export function Footer() {
                 <a
                   key={social}
                   href="#"
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-secondary-400 hover:text-primary-400 hover:bg-primary-500/20 hover:border-primary-500/30 transition-all duration-300 hover:-translate-y-1"
+                  className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-white/70 hover:text-primary-400 hover:bg-primary-500/20 hover:border-primary-500/30 transition-all duration-300 hover:-translate-y-1"
                   aria-label={social}
                 >
                   <span className="text-xs font-semibold uppercase">{social.charAt(0)}</span>
@@ -66,7 +66,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="font-bold text-base sm:text-lg mb-6 flex items-center gap-2">
+            <h3 className="font-bold text-base sm:text-lg mb-6 flex items-center gap-2 text-white">
               <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full" />
               Послуги
             </h3>
@@ -75,7 +75,7 @@ export function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-secondary-400 hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
+                    className="text-white/70 hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
                   >
                     <span className="w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-4 transition-all duration-300 rounded-full" />
                     {item.name}
@@ -87,7 +87,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-bold text-base sm:text-lg mb-6 flex items-center gap-2">
+            <h3 className="font-bold text-base sm:text-lg mb-6 flex items-center gap-2 text-white">
               <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full" />
               Навігація
             </h3>
@@ -96,7 +96,7 @@ export function Footer() {
                 <li key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-secondary-400 hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
+                    className="text-white/70 hover:text-primary-400 text-sm transition-all duration-300 flex items-center gap-2 group"
                   >
                     <span className="w-0 h-0.5 bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-4 transition-all duration-300 rounded-full" />
                     {item.name}
@@ -108,7 +108,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-bold text-base sm:text-lg mb-6 flex items-center gap-2">
+            <h3 className="font-bold text-base sm:text-lg mb-6 flex items-center gap-2 text-white">
               <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full" />
               Контакти
             </h3>
@@ -117,7 +117,7 @@ export function Footer() {
                 <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
                   <MapPinIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <span className="text-secondary-400 text-sm pt-1">
+                <span className="text-white/70 text-sm pt-1">
                   м. Житомир<br />
                   вулиця Східна, 107/86
                 </span>
@@ -127,10 +127,10 @@ export function Footer() {
                   <PhoneIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <a href="tel:+380679082629" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
+                  <a href="tel:+380679082629" className="text-white/70 hover:text-primary-400 text-sm transition-colors duration-300">
                     +38 (067) 908 26 29
                   </a>
-                  <a href="tel:+380412447307" className="text-secondary-400 hover:text-primary-400 text-sm transition-colors duration-300">
+                  <a href="tel:+380412447307" className="text-white/70 hover:text-primary-400 text-sm transition-colors duration-300">
                     +38 (041) 244 73 07
                   </a>
                 </div>
@@ -139,7 +139,7 @@ export function Footer() {
                 <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl flex items-center justify-center text-primary-400 group-hover:bg-primary-500/20 group-hover:border-primary-500/30 transition-all duration-300 flex-shrink-0">
                   <ClockIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <div className="text-secondary-400 text-sm">
+                <div className="text-white/70 text-sm">
                   <div>Пн-Пт: 08:00-19:00</div>
                   <div>Сб: 08:00-14:00</div>
                 </div>
@@ -151,18 +151,30 @@ export function Footer() {
         {/* Bottom */}
         <div className="border-t border-white/10 mt-10 sm:mt-12 pt-6 sm:pt-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-secondary-500 text-xs sm:text-sm">
+            <p className="text-white/70 text-xs sm:text-sm">
               © {new Date().getFullYear()} КОСМОДЕНТ. Всі права захищено.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-              <Link href="#" className="text-secondary-500 hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group">
+            <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6">
+              <Link href="#" className="text-white/70 hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group">
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300" />
                 Політика конфіденційності
               </Link>
-              <Link href="#" className="text-secondary-500 hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group">
+              <Link href="#" className="text-white/70 hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group">
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300" />
                 Умови використання
               </Link>
+              <a
+                href="https://stepslab.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/70 hover:text-primary-400 text-xs sm:text-sm transition-all duration-300 relative group flex items-center gap-1"
+              >
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-primary-500 to-primary-600 group-hover:w-full transition-all duration-300" />
+                Made by STEPS LAB
+                <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>

@@ -104,19 +104,19 @@ export function ReviewsSection() {
               Відгуки пацієнтів
             </span>
           </div>
-          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center">
+          <h2 className="section-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center leading-tight">
             Що кажуть наші пацієнти
           </h2>
-          <p className="section-subtitle text-base sm:text-xl md:text-2xl text-center mx-auto max-w-2xl sm:max-w-3xl">
+          <p className="section-subtitle text-base sm:text-xl md:text-2xl text-center mx-auto max-w-2xl sm:max-w-3xl mt-4">
             Реальні історії та відгуки людей, які довірили нам свою посмішку
           </p>
         </div>
 
         {/* Stats */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-12 mb-12 sm:mb-16 animate-fade-in-up">
-          <div className="relative group">
+          <div className="relative group w-full sm:w-auto">
             <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-amber-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-            <div className="relative bg-white/80 backdrop-blur-xl border border-amber-200/50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-amber-500/10">
+            <div className="relative bg-white/80 backdrop-blur-xl border border-amber-200/50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-amber-500/10 min-h-[160px] sm:min-h-[180px] flex flex-col justify-center items-center">
               <div className="flex items-center justify-center gap-1 mb-3">
                 {[...Array(5)].map((_, i) => (
                   <StarIcon
@@ -132,7 +132,7 @@ export function ReviewsSection() {
               <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">
                 {stats.averageRating}/5
               </div>
-              <div className="text-sm text-secondary-600 font-medium mt-1">
+              <div className="text-sm text-secondary-600 font-medium mt-1 text-center">
                 Середній рейтинг
               </div>
             </div>
@@ -140,13 +140,15 @@ export function ReviewsSection() {
 
           <div className="hidden sm:block w-px h-24 bg-gradient-to-b from-transparent via-secondary-200 to-transparent" />
 
-          <div className="relative group">
+          <div className="relative group w-full sm:w-auto">
             <div className="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-primary-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-            <div className="relative bg-white/80 backdrop-blur-xl border border-primary-200/50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-primary-500/10">
+            <div className="relative bg-white/80 backdrop-blur-xl border border-primary-200/50 rounded-3xl p-6 sm:p-8 shadow-xl shadow-primary-500/10 min-h-[160px] sm:min-h-[180px] flex flex-col justify-center items-center">
               <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent mb-1">
                 {stats.activeReviews}
               </div>
-              <div className="text-sm text-secondary-600 font-medium">Відгуків</div>
+              <div className="text-sm text-secondary-600 font-medium text-center">
+                Відгуків
+              </div>
             </div>
           </div>
         </div>
