@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Variables ───────────────────────────────────────── */
+:root {
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --color-brand: #16a34a;
+  --color-brand-light: #dcfce7;
+  --radius-card: 1rem;
+}
+
+/* ── Base styles ─────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-neutral-900 font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-semibold tracking-tight;
+  }
+
+  /* Focus visible — accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-600 rounded;
+  }
+}
+
+/* ── Component utilities ─────────────────────────────────── */
+@layer components {
+  .container-site {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-primary-600 hover:bg-primary-700
+           text-white font-medium
+           px-6 py-3 rounded-xl
+           shadow-button hover:shadow-none
+           transition-all duration-200
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2
+           border-2 border-primary-600 text-primary-600
+           hover:bg-primary-50
+           font-medium px-6 py-3 rounded-xl
+           transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-card border border-neutral-100
+           hover:shadow-card-hover transition-shadow duration-300;
+  }
+
+  .section-heading {
+    @apply text-3xl sm:text-4xl font-semibold text-neutral-900 tracking-tight;
+  }
+
+  .section-subheading {
+    @apply text-lg text-neutral-500 mt-3 max-w-2xl;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-green  { @apply badge bg-primary-100 text-primary-700; }
+  .badge-yellow { @apply badge bg-yellow-100  text-yellow-700; }
+  .badge-red    { @apply badge bg-red-100     text-red-700; }
+  .badge-gray   { @apply badge bg-neutral-100 text-neutral-600; }
+
+  /* Admin layout */
+  .admin-sidebar-link {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-xl
+           text-neutral-600 hover:text-primary-700 hover:bg-primary-50
+           font-medium text-sm transition-colors duration-150;
+  }
+
+  .admin-sidebar-link.active {
+    @apply text-primary-700 bg-primary-50 font-semibold;
+  }
+
+  /* Form field */
+  .form-input {
+    @apply w-full px-4 py-3 rounded-xl border border-neutral-200
+           bg-white placeholder-neutral-400 text-neutral-900
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           transition-all duration-200;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-neutral-700 mb-1.5;
+  }
+
+  .form-error {
+    @apply text-red-500 text-sm mt-1;
+  }
+}
+
+/* ── Micro-animations ────────────────────────────────────── */
+@layer utilities {
+  .animate-fade-in  { animation: fadeIn 0.4s ease-out both; }
+  .animate-slide-up { animation: slideUp 0.5s ease-out both; }
+
+  .hover-lift {
+    @apply transition-transform duration-200 hover:-translate-y-1;
+  }
+
+  /* Stagger children animations */
+  .stagger > * { animation-fill-mode: both; }
+  .stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger > *:nth-child(2) { animation-delay: 80ms; }
+  .stagger > *:nth-child(3) { animation-delay: 160ms; }
+  .stagger > *:nth-child(4) { animation-delay: 240ms; }
+  .stagger > *:nth-child(5) { animation-delay: 320ms; }
+  .stagger > *:nth-child(6) { animation-delay: 400ms; }
+}
