@@ -15,24 +15,52 @@ interface Review {
   doctor?: { name: string };
 }
 
+interface ReviewStatistics {
+  averageRating: number;
+  activeReviews: number;
+  ratingDistribution: { rating: number; count: number }[];
+}
+
+const DEFAULT_STATS: ReviewStatistics = {
+  averageRating: 0,
+  activeReviews: 0,
+  ratingDistribution: [
+    { rating: 1, count: 0 },
+    { rating: 2, count: 0 },
+    { rating: 3, count: 0 },
+    { rating: 4, count: 0 },
+    { rating: 5, count: 0 },
+  ],
+};
+
 export function ReviewsPage() {
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [stats, setStats] = useState<{
-    averageRating: number;
-    activeReviews: number;
-    ratingDistribution: { rating: number; count: number }[];
-  } | null>(null);
+  const [stats, setStats] = useState<ReviewStatistics>(DEFAULT_STATS);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    Promise.all([
-      api.getReviews({ isActive: 'true' }),
-      api.getReviewStatistics(),
-    ]).then(([reviewsData, statsData]) => {
-      setReviews(reviewsData);
-      setStats(statsData);
-      setLoading(false);
-    });
+    const loadData = async () => {
+      try {
+        setError(null);
+        const [reviewsData, statsData] = await Promise.all([
+          api.getReviews({ isActive: 'true' }),
+          api.getReviewStatistics(),
+        ]);
+
+        setReviews(Array.isArray(reviewsData) ? reviewsData : []);
+        setStats(statsData || DEFAULT_STATS);
+      } catch (err) {
+        console.error('Failed to load reviews:', err);
+        setError('Не вдалося завантажити відгуки');
+        setStats(DEFAULT_STATS);
+        setReviews([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
   }, []);
 
   return (
@@ -47,54 +75,62 @@ export function ReviewsPage() {
           </p>
         </div>
 
-        {stats && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-            <div className="card p-6 text-center md:col-span-1">
-              <div className="text-4xl font-bold text-primary-600 mb-2">
-                {stats.averageRating}
-              </div>
-              <div className="flex justify-center mb-2">
-                {[...Array(5)].map((_, i) => (
-                  <StarIcon
-                    key={i}
-                    className={`w-5 h-5 ${
-                      i < Math.floor(stats.averageRating)
-                        ? 'text-yellow-400'
-                        : 'text-secondary-300'
-                    }`}
-                  />
-                ))}
-              </div>
-              <div className="text-sm text-secondary-600">Середній рейтинг</div>
-            </div>
-
-            <div className="card p-6 md:col-span-3">
-              <h3 className="font-semibold text-secondary-900 mb-4">Розподіл оцінок</h3>
-              <div className="space-y-2">
-                {stats.ratingDistribution?.map((item) => (
-                  <div key={item.rating} className="flex items-center gap-3">
-                    <div className="w-12 text-sm text-secondary-600">{item.rating} ★</div>
-                    <div className="flex-1 h-3 bg-secondary-100 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-yellow-400 rounded-full"
-                        style={{
-                          width: `${
-                            stats.activeReviews
-                              ? (item.count / stats.activeReviews) * 100
-                              : 0
-                          }%`,
-                        }}
-                      />
-                    </div>
-                    <div className="w-12 text-sm text-secondary-600 text-right">
-                      {item.count}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+        {error && (
+          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            {error}
           </div>
         )}
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+          <div className="card p-6 text-center md:col-span-1">
+            <div className="text-4xl font-bold text-primary-600 mb-2">
+              {stats.averageRating}
+            </div>
+            <div className="flex justify-center mb-2">
+              {[...Array(5)].map((_, i) => (
+                <StarIcon
+                  key={i}
+                  className={`w-5 h-5 ${
+                    i < Math.floor(stats.averageRating)
+                      ? 'text-yellow-400'
+                      : 'text-secondary-300'
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="text-sm text-secondary-600">Середній рейтинг</div>
+          </div>
+
+          <div className="card p-6 md:col-span-3">
+            <h3 className="font-semibold text-secondary-900 mb-4">
+              Розподіл оцінок
+            </h3>
+            <div className="space-y-2">
+              {stats.ratingDistribution.map((item) => (
+                <div key={item.rating} className="flex items-center gap-3">
+                  <div className="w-12 text-sm text-secondary-600">
+                    {item.rating} ★
+                  </div>
+                  <div className="flex-1 h-3 bg-secondary-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-yellow-400 rounded-full"
+                      style={{
+                        width: `${
+                          stats.activeReviews
+                            ? (item.count / stats.activeReviews) * 100
+                            : 0
+                        }%`,
+                      }}
+                    />
+                  </div>
+                  <div className="w-12 text-sm text-secondary-600 text-right">
+                    {item.count}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {loading
@@ -109,6 +145,12 @@ export function ReviewsPage() {
                   <div className="h-4 bg-secondary-200 rounded w-3/4" />
                 </div>
               ))
+            : reviews.length === 0
+            ? (
+              <div className="col-span-full text-center py-12 text-secondary-500">
+                Відгуків поки немає
+              </div>
+            )
             : reviews.map((review) => (
                 <div key={review._id} className="card p-6">
                   <div className="flex mb-3">
@@ -121,15 +163,21 @@ export function ReviewsPage() {
                       />
                     ))}
                   </div>
-                  <h3 className="font-semibold text-secondary-900 mb-2">{review.title}</h3>
+                  <h3 className="font-semibold text-secondary-900 mb-2">
+                    {review.title}
+                  </h3>
                   <p className="text-secondary-700 mb-4">{review.content}</p>
                   <div className="flex items-center justify-between text-sm text-secondary-500">
                     <span>{review.patientName}</span>
-                    <span>{new Date(review.createdAt).toLocaleDateString('uk-UA')}</span>
+                    <span>
+                      {new Date(review.createdAt).toLocaleDateString('uk-UA')}
+                    </span>
                   </div>
                   {(review.service || review.doctor) && (
                     <div className="mt-3 pt-3 border-t border-secondary-100 flex gap-4 text-xs text-secondary-500">
-                      {review.service && <span>Послуга: {review.service.name}</span>}
+                      {review.service && (
+                        <span>Послуга: {review.service.name}</span>
+                      )}
                       {review.doctor && <span>Лікар: {review.doctor.name}</span>}
                     </div>
                   )}

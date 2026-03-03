@@ -1,5 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { reviewService } from '../../services/ReviewService';
+import { logger } from '../../config/logger';
 
 /**
  * Get all reviews (admin)
@@ -178,6 +179,10 @@ export const getStatistics = async (
     const statistics = await reviewService.getStatistics();
     return reply.send(statistics);
   } catch (error) {
+    logger.error('Error getting review statistics:', error);
     throw error;
   }
 };
+
+// Export alias for consistency
+export { getStatistics as getReviewStatistics };

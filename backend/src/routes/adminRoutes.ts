@@ -22,16 +22,22 @@ export const adminRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.post('/auth/refresh', {
     schema: {
       tags: ['Admin Auth'],
-      summary: 'Refresh token',
+      summary: 'Refresh access token',
       body: {
         type: 'object',
-        required: ['refreshToken'],
         properties: {
           refreshToken: { type: 'string' },
         },
       },
     },
   }, controller.refreshToken);
+
+  fastify.post('/auth/logout', {
+    schema: {
+      tags: ['Admin Auth'],
+      summary: 'Admin logout',
+    },
+  }, controller.logout);
 
   // Protected routes - add middleware hook BEFORE registering protected routes
   fastify.addHook('preHandler', async (request, reply) => {
@@ -51,7 +57,6 @@ export const adminRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.get('/services', controller.getAllServices);
   fastify.get('/services/:id', {
     schema: {
-      tags: ['Admin Services'],
       params: {
         type: 'object',
         properties: {
@@ -69,7 +74,6 @@ export const adminRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.get('/appointments', controller.getAllAppointments);
   fastify.get('/appointments/:id', {
     schema: {
-      tags: ['Admin Appointments'],
       params: {
         type: 'object',
         properties: {
@@ -85,7 +89,6 @@ export const adminRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.get('/doctors', controller.getAllDoctors);
   fastify.get('/doctors/:id', {
     schema: {
-      tags: ['Admin Doctors'],
       params: {
         type: 'object',
         properties: {
@@ -103,7 +106,6 @@ export const adminRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.get('/reviews', controller.getAllReviews);
   fastify.get('/reviews/:id', {
     schema: {
-      tags: ['Admin Reviews'],
       params: {
         type: 'object',
         properties: {
@@ -122,7 +124,6 @@ export const adminRoutes: FastifyPluginAsync = async (fastify) => {
   fastify.get('/blog', controller.getAllBlogPosts);
   fastify.get('/blog/:id', {
     schema: {
-      tags: ['Admin Blog'],
       params: {
         type: 'object',
         properties: {

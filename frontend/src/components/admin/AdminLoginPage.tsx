@@ -18,7 +18,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 export function AdminLoginPage() {
   const router = useRouter();
   const setAuth = useAdminStore((state) => state.setAuth);
-  
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -35,19 +35,28 @@ export function AdminLoginPage() {
     setError(null);
 
     try {
-      // Спочатку пробуємо реальний API
-      try {
-        const response = await api.adminLogin(data.email, data.password) as {
-          accessToken: string;
-          admin: { id: string; email: string; name: string; role: string };
-        };
+      // Try real API first
+      const response = await api.adminLogin(data.email, data.password);
+      
+      if (response.accessToken && response.admin) {
+        // Store auth state
         setAuth(response.accessToken, response.admin);
-        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Small delay to ensure state is persisted
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        
         router.push('/admin/dashboard');
-      } catch {
-        // Якщо API недоступний, використовуємо демо-режим
-        console.log('API недоступний, використовуємо демо-режим');
+        return;
+      }
 
+      throw new Error('Invalid response from server');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Помилка входу';
+      
+      // Check if it's a network error - fallback to demo mode
+      if (errorMessage.includes('Network Error') || errorMessage.includes('ERR_CONNECTION')) {
+        console.log('API unavailable, using demo mode');
+        
         if (data.email === 'admin' && data.password === '12345678') {
           const mockUser = {
             id: '1',
@@ -58,14 +67,13 @@ export function AdminLoginPage() {
           const mockToken = 'demo-admin-token';
 
           setAuth(mockToken, mockUser);
-          await new Promise(resolve => setTimeout(resolve, 100));
+          await new Promise((resolve) => setTimeout(resolve, 100));
           router.push('/admin/dashboard');
-        } else {
-          setError('Невірний логін або пароль');
+          return;
         }
       }
-    } catch (err) {
-      setError((err as Error).message || 'Помилка входу');
+
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -99,6 +107,7 @@ export function AdminLoginPage() {
               {...register('email')}
               className="input-field"
               placeholder="admin"
+              disabled={loading}
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -112,6 +121,7 @@ export function AdminLoginPage() {
               {...register('password')}
               className="input-field"
               placeholder="••••••••"
+              disabled={loading}
             />
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
@@ -127,7 +137,7 @@ export function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="btn-primary w-full"
+            className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Вхід...' : 'Увійти'}
           </button>

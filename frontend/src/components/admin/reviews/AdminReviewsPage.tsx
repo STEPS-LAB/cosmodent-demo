@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAdminStore } from '@/stores/adminStore';
+import { useAdminStore, useStoreInitialized } from '@/stores/adminStore';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { api } from '@/services/api';
 import { TrashIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
@@ -32,34 +32,45 @@ const statusLabels: Record<string, string> = {
 export function AdminReviewsPage() {
   const router = useRouter();
   const { isAuthenticated } = useAdminStore();
+  const isStoreInitialized = useStoreInitialized();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadReviews = useCallback(async () => {
+    try {
+      setError(null);
+      const data = await api.getAdminReviews();
+      setReviews(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error('Failed to load reviews:', err);
+      setError('Не вдалося завантажити відгуки');
+      setReviews([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
+    // Wait for store initialization
+    if (!isStoreInitialized) return;
+
+    // Redirect if not authenticated
     if (!isAuthenticated) {
       router.push('/admin/login');
       return;
     }
-    loadReviews();
-  }, [isAuthenticated, router]);
 
-  const loadReviews = () => {
-    api.getAdminReviews()
-      .then((data) => {
-        setReviews(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setReviews([]);
-        setLoading(false);
-      });
-  };
+    // Load reviews
+    loadReviews();
+  }, [isStoreInitialized, isAuthenticated, router, loadReviews]);
 
   const approveReview = async (id: string) => {
     try {
       await api.approveReview(id);
-      loadReviews();
-    } catch {
+      await loadReviews();
+    } catch (err) {
+      console.error('Failed to approve review:', err);
       alert('Помилка схвалення');
     }
   };
@@ -67,8 +78,9 @@ export function AdminReviewsPage() {
   const rejectReview = async (id: string) => {
     try {
       await api.rejectReview(id);
-      loadReviews();
-    } catch {
+      await loadReviews();
+    } catch (err) {
+      console.error('Failed to reject review:', err);
       alert('Помилка відхилення');
     }
   };
@@ -77,12 +89,25 @@ export function AdminReviewsPage() {
     if (!confirm('Ви впевнені, що хочете видалити цей відгук?')) return;
     try {
       await api.deleteReview(id);
-      loadReviews();
-    } catch {
+      await loadReviews();
+    } catch (err) {
+      console.error('Failed to delete review:', err);
       alert('Помилка видалення');
     }
   };
 
+  // Show loading during initialization
+  if (!isStoreInitialized) {
+    return (
+      <AdminLayout>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="animate-pulse text-secondary-500">Завантаження...</div>
+        </div>
+      </AdminLayout>
+    );
+  }
+
+  // Redirect handled by AdminLayout
   if (!isAuthenticated) return null;
 
   return (
@@ -93,58 +118,116 @@ export function AdminReviewsPage() {
           <p className="text-secondary-600 mt-1">Управління відгуками пацієнтів</p>
         </div>
 
+        {error && (
+          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            {error}
+          </div>
+        )}
+
         <div className="card overflow-hidden">
           <table className="min-w-full divide-y divide-secondary-200">
             <thead className="bg-secondary-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase">Пацієнт</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase">Відгук</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase">Рейтинг</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase">Статус</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-secondary-500 uppercase">Дії</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase">
+                  Пацієнт
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase">
+                  Відгук
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase">
+                  Рейтинг
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase">
+                  Статус
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-secondary-500 uppercase">
+                  Дії
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-secondary-200">
               {loading ? (
-                <tr><td colSpan={5} className="px-6 py-8 text-center text-secondary-500">Завантаження...</td></tr>
+                <tr>
+                  <td colSpan={5} className="px-6 py-8 text-center text-secondary-500">
+                    Завантаження...
+                  </td>
+                </tr>
               ) : reviews.length === 0 ? (
-                <tr><td colSpan={5} className="px-6 py-8 text-center text-secondary-500">Відгуків не знайдено</td></tr>
+                <tr>
+                  <td colSpan={5} className="px-6 py-8 text-center text-secondary-500">
+                    Відгуків не знайдено
+                  </td>
+                </tr>
               ) : (
                 reviews.map((review) => (
                   <tr key={review._id}>
                     <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-secondary-900">{review.patientName}</div>
-                      <div className="text-sm text-secondary-500">{new Date(review.createdAt).toLocaleDateString('uk-UA')}</div>
+                      <div className="text-sm font-medium text-secondary-900">
+                        {review.patientName}
+                      </div>
+                      <div className="text-sm text-secondary-500">
+                        {new Date(review.createdAt).toLocaleDateString('uk-UA')}
+                      </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-secondary-900">{review.title}</div>
-                      <div className="text-sm text-secondary-600 truncate max-w-xs">{review.content}</div>
+                      <div className="text-sm font-medium text-secondary-900">
+                        {review.title}
+                      </div>
+                      <div className="text-sm text-secondary-600 truncate max-w-xs">
+                        {review.content}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
-                          <span key={i} className={i < review.rating ? 'text-yellow-400' : 'text-secondary-300'}>★</span>
+                          <span
+                            key={i}
+                            className={
+                              i < review.rating ? 'text-yellow-400' : 'text-secondary-300'
+                            }
+                          >
+                            ★
+                          </span>
                         ))}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusColors[review.status]}`}>
+                      <span
+                        className={`px-2 py-1 text-xs font-medium rounded-full ${
+                          statusColors[review.status]
+                        }`}
+                      >
                         {statusLabels[review.status]}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right">
                       <div className="flex items-center justify-end space-x-2">
                         {review.status !== 'approved' && (
-                          <button onClick={() => approveReview(review._id)} className="p-2 hover:bg-green-50 rounded text-green-600" title="Схвалити">
+                          <button
+                            onClick={() => approveReview(review._id)}
+                            className="p-2 hover:bg-green-50 rounded text-green-600"
+                            title="Схвалити"
+                            aria-label="Схвалити"
+                          >
                             <CheckCircleIcon className="w-5 h-5" />
                           </button>
                         )}
                         {review.status !== 'rejected' && (
-                          <button onClick={() => rejectReview(review._id)} className="p-2 hover:bg-red-50 rounded text-red-600" title="Відхилити">
+                          <button
+                            onClick={() => rejectReview(review._id)}
+                            className="p-2 hover:bg-red-50 rounded text-red-600"
+                            title="Відхилити"
+                            aria-label="Відхилити"
+                          >
                             <XCircleIcon className="w-5 h-5" />
                           </button>
                         )}
-                        <button onClick={() => deleteReview(review._id)} className="p-2 hover:bg-red-50 rounded text-red-600" title="Видалити">
+                        <button
+                          onClick={() => deleteReview(review._id)}
+                          className="p-2 hover:bg-red-50 rounded text-red-600"
+                          title="Видалити"
+                          aria-label="Видалити"
+                        >
                           <TrashIcon className="w-4 h-4" />
                         </button>
                       </div>

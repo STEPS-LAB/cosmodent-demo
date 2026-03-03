@@ -1,4 +1,4 @@
-export { login, refreshToken, getMe, updateProfile, changePassword } from './AuthController';
+export { login, refreshToken, logout, getMe, updateProfile, changePassword } from './AuthController';
 export { getDashboardStats, getRecentAppointments } from './DashboardController';
 export { 
   getAllServices, 
@@ -22,13 +22,14 @@ export {
   deleteDoctor,
   updateOrder as updateDoctorOrder
 } from './DoctorController';
-export { 
-  getAllReviews, 
-  getReviewById, 
-  approveReview, 
-  rejectReview, 
-  updateReview, 
-  deleteReview
+export {
+  getAllReviews,
+  getReviewById,
+  approveReview,
+  rejectReview,
+  updateReview,
+  deleteReview,
+  getReviewStatistics
 } from './ReviewController';
 export { 
   getAllBlogPosts, 
@@ -39,13 +40,12 @@ export {
   publishBlogPost,
   unpublishBlogPost
 } from './BlogController';
-export { 
-  getSettings, 
-  updateSettings, 
-  updateClinicInfo, 
-  updateWorkingHours, 
-  updateSocialLinks, 
+export {
+  getSettings,
+  updateSettings,
+  updateClinicInfo,
+  updateWorkingHours,
+  updateSocialLinks,
   updateSeo,
   updateBookingSettings
 } from './SettingsController';
-export { getStatistics as getReviewStatistics } from './ReviewController';

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAdminStore } from '@/stores/adminStore';
+import { useAdminStore, useStoreInitialized } from '@/stores/adminStore';
 import {
   Bars3Icon,
   XMarkIcon,
@@ -30,32 +30,51 @@ const navigation = [
 export function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, logout, isAuthenticated } = useAdminStore();
+  const { user, logout, isAuthenticated, initialize } = useAdminStore();
+  const isStoreInitialized = useStoreInitialized();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  const handleLogout = () => {
-    logout();
-    router.push('/admin/login');
+  const handleLogout = async () => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/admin/auth/logout`, {
+        method: 'POST',
+        credentials: 'include',
+      }).catch(() => {}); // Ignore errors
+    } finally {
+      logout();
+      router.push('/admin/login');
+    }
   };
 
-  // Перевіряємо, чи потрібно перенаправити на логін
+  // Initialize store after hydration
   useEffect(() => {
+    setIsClient(true);
+    initialize();
+  }, [initialize]);
+
+  // Redirect to login if not authenticated (only after initialization)
+  useEffect(() => {
+    if (!isClient || !isStoreInitialized) return;
+
     if (!isAuthenticated && pathname !== '/admin/login') {
       router.push('/admin/login');
     }
-  }, [isAuthenticated, pathname, router]);
+  }, [isClient, isStoreInitialized, isAuthenticated, pathname, router]);
 
-  // Перевіряємо монтаж для уникнення гідратації
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Якщо не автентифіковані і на сторінці логіну - показуємо тільки контент
-  if (!isMounted) {
-    return null;
+  // Show nothing during SSR/hydration
+  if (!isClient || !isStoreInitialized) {
+    return (
+      <div className="min-h-screen bg-secondary-50 flex items-center justify-center">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="w-16 h-16 bg-secondary-200 rounded-full mb-4" />
+          <div className="h-4 w-32 bg-secondary-200 rounded" />
+        </div>
+      </div>
+    );
   }
 
+  // If not authenticated and on login page - show only content
   if (!isAuthenticated && pathname === '/admin/login') {
     return (
       <div className="min-h-screen bg-secondary-50 flex items-center justify-center py-12 px-4">
@@ -64,7 +83,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // Якщо не автентифіковані - не показуємо нічого (відбудеться редірект)
+  // If not authenticated - show nothing (redirect will happen)
   if (!isAuthenticated) {
     return null;
   }
@@ -101,6 +120,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             <button
               className="lg:hidden p-2"
               onClick={() => setSidebarOpen(false)}
+              aria-label="Close sidebar"
             >
               <XMarkIcon className="w-5 h-5" />
             </button>
@@ -109,7 +129,8 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           {/* Navigation */}
           <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
             {navigation.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+              const isActive =
+                pathname === item.href || pathname.startsWith(item.href + '/');
               return (
                 <Link
                   key={item.name}
@@ -132,12 +153,16 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
             <div className="flex items-center mb-3">
               <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
                 <span className="text-primary-700 font-semibold text-sm">
-                  {user?.name.charAt(0)}
+                  {user?.name?.charAt(0) || 'A'}
                 </span>
               </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-secondary-900">{user?.name}</p>
-                <p className="text-xs text-secondary-500">{user?.role}</p>
+              <div className="ml-3 flex-1 min-w-0">
+                <p className="text-sm font-medium text-secondary-900 truncate">
+                  {user?.name || 'Admin'}
+                </p>
+                <p className="text-xs text-secondary-500 truncate">
+                  {user?.role || 'admin'}
+                </p>
               </div>
             </div>
             <button
@@ -158,6 +183,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           <button
             className="lg:hidden p-2 mr-4"
             onClick={() => setSidebarOpen(true)}
+            aria-label="Open sidebar"
           >
             <Bars3Icon className="w-6 h-6" />
           </button>

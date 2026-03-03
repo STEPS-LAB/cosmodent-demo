@@ -1,7 +1,6 @@
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import { logger } from '../config/logger';
 import { ZodError } from 'zod';
-import { JsonWebTokenError, TokenExpiredError } from '@fastify/jwt';
 
 export const errorHandler = (
   error: FastifyError,
@@ -26,8 +25,8 @@ export const errorHandler = (
     });
   }
 
-  // JWT errors
-  if (error instanceof TokenExpiredError) {
+  // JWT errors (check by name since types may vary)
+  if ((error as any).name === 'TokenExpiredError') {
     return reply.code(401).send({
       statusCode: 401,
       error: 'Unauthorized',
@@ -35,7 +34,7 @@ export const errorHandler = (
     });
   }
 
-  if (error instanceof JsonWebTokenError) {
+  if ((error as any).name === 'JsonWebTokenError') {
     return reply.code(401).send({
       statusCode: 401,
       error: 'Unauthorized',
@@ -69,7 +68,7 @@ export const errorHandler = (
     return reply.code(400).send({
       statusCode: 400,
       error: 'Bad Request',
-      message: `Invalid ${error.message.split('for').pop()?.trim() || 'ID'}`,
+      message: `Invalid ${(error as any).message.split('for').pop()?.trim() || 'ID'}`,
     });
   }
 

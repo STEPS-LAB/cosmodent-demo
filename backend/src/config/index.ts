@@ -10,12 +10,17 @@ export const config = {
     uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/cosmodent',
   },
   jwt: {
+    // CRITICAL: Change this in production!
     secret: process.env.JWT_SECRET || 'default-secret-change-in-production',
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+    // Short-lived access token (15 minutes for production, 7 days for dev)
+    expiresIn: process.env.JWT_EXPIRES_IN || '15m',
+    // Long-lived refresh token (30 days)
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '30d',
   },
   cors: {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    // Comma-separated list of allowed origins
+    origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:3000'],
+    credentials: true,
   },
   upload: {
     maxFileSize: parseInt(process.env.MAX_FILE_SIZE || '5242880', 10),

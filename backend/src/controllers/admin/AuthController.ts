@@ -2,9 +2,20 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 import { authService } from '../../services/AuthService';
 import { config } from '../../config';
 
+// Custom JWT payload type
+interface CustomJwtPayload {
+  id: string;
+  email: string;
+  role: string;
+  name: string;
+  type?: string;
+}
+
 /**
  * Admin login
  * POST /api/admin/auth/login
+ * 
+ * Returns access token (short-lived) and refresh token (httpOnly cookie)
  */
 export const login = async (
   request: FastifyRequest<{
@@ -14,57 +25,91 @@ export const login = async (
 ) => {
   try {
     const { email, password } = request.body;
+
+    // Validate admin credentials
     const result = await authService.login({ email, password });
 
-    // Generate JWT tokens
-    const accessToken = await reply.jwtSign({
-      id: result.admin._id,
-      email: result.admin.email,
-      role: result.admin.role,
-      name: result.admin.name,
-    }, { expiresIn: config.jwt.expiresIn });
+    // Generate short-lived access token (15min by default)
+    const accessToken = await reply.jwtSign(
+      {
+        id: result.admin._id,
+        email: result.admin.email,
+        role: result.admin.role,
+        name: result.admin.name,
+      },
+      { expiresIn: config.jwt.expiresIn }
+    );
 
-    const refreshToken = await reply.jwtSign({
-      id: result.admin._id,
-      type: 'refresh',
-    }, { expiresIn: config.jwt.refreshExpiresIn });
+    // Generate long-lived refresh token (30d by default)
+    const refreshToken = await reply.jwtSign(
+      {
+        id: result.admin._id,
+        type: 'refresh',
+      },
+      { expiresIn: config.jwt.refreshExpiresIn }
+    );
+
+    // Set refresh token as httpOnly cookie (secure, sameSite)
+    reply.setCookie('refreshToken', refreshToken, {
+      path: '/',
+      httpOnly: true,
+      secure: config.env === 'production', // HTTPS only in production
+      sameSite: 'strict',
+      maxAge: 30 * 24 * 60 * 60, // 30 days in seconds
+    });
 
     return reply.send({
-      admin: result.admin,
+      admin: {
+        id: result.admin._id,
+        email: result.admin.email,
+        name: result.admin.name,
+        role: result.admin.role,
+      },
       accessToken,
-      refreshToken,
     });
   } catch (error) {
-    if ((error as Error).message.includes('Invalid') ||
-        (error as Error).message.includes('deactivated')) {
+    const errorMessage = (error as Error).message;
+    
+    if (errorMessage.includes('Invalid') || errorMessage.includes('deactivated')) {
       return reply.code(401).send({
         statusCode: 401,
         error: 'Unauthorized',
-        message: (error as Error).message,
+        message: errorMessage,
       });
     }
+
     throw error;
   }
 };
 
 /**
- * Refresh token
+ * Refresh access token
  * POST /api/admin/auth/refresh
+ * 
+ * Uses refresh token from httpOnly cookie to generate new access token
  */
 export const refreshToken = async (
-  request: FastifyRequest<{
-    Body: { refreshToken: string };
-  }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) => {
   try {
-    const { refreshToken } = request.body;
+    // Get refresh token from cookie (preferred) or body (fallback)
+    const cookies = request.cookies as { refreshToken?: string };
+    const refreshToken = cookies?.refreshToken || 
+                         (request.body as { refreshToken?: string })?.refreshToken;
 
-    const decoded = await reply.jwtVerify(refreshToken) as {
-      id: string;
-      type: string;
-    };
+    if (!refreshToken) {
+      return reply.code(401).send({
+        statusCode: 401,
+        error: 'Unauthorized',
+        message: 'Refresh token is required',
+      });
+    }
 
+    // Verify refresh token
+    const decoded = await reply.jwtVerify(refreshToken) as CustomJwtPayload;
+
+    // Check token type
     if (decoded.type !== 'refresh') {
       return reply.code(401).send({
         statusCode: 401,
@@ -73,9 +118,13 @@ export const refreshToken = async (
       });
     }
 
+    // Verify admin still exists
     const admin = await authService.getAdminById(decoded.id);
 
     if (!admin) {
+      // Clear invalid cookie
+      reply.clearCookie('refreshToken', { path: '/' });
+      
       return reply.code(401).send({
         statusCode: 401,
         error: 'Unauthorized',
@@ -83,23 +132,48 @@ export const refreshToken = async (
       });
     }
 
-    const newAccessToken = await reply.jwtSign({
-      id: admin._id,
-      email: admin.email,
-      role: admin.role,
-      name: admin.name,
-    }, { expiresIn: config.jwt.expiresIn });
+    // Generate new access token
+    const newAccessToken = await reply.jwtSign(
+      {
+        id: admin._id,
+        email: admin.email,
+        role: admin.role,
+        name: admin.name,
+      },
+      { expiresIn: config.jwt.expiresIn }
+    );
 
     return reply.send({
       accessToken: newAccessToken,
     });
   } catch (error) {
+    // Clear invalid cookie
+    reply.clearCookie('refreshToken', { path: '/' });
+
     return reply.code(401).send({
       statusCode: 401,
       error: 'Unauthorized',
       message: 'Invalid or expired refresh token',
     });
   }
+};
+
+/**
+ * Logout
+ * POST /api/admin/auth/logout
+ * 
+ * Clears refresh token cookie
+ */
+export const logout = async (
+  _request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  // Clear refresh token cookie
+  reply.clearCookie('refreshToken', { path: '/' });
+
+  return reply.send({
+    message: 'Logged out successfully',
+  });
 };
 
 /**
@@ -118,8 +192,24 @@ export const getMe = async (
         message: 'Not authenticated',
       });
     }
-    
-    return reply.send(request.user);
+
+    // Get fresh admin data from database
+    const admin = await authService.getAdminById(request.user.id);
+
+    if (!admin) {
+      return reply.code(404).send({
+        statusCode: 404,
+        error: 'Not Found',
+        message: 'Admin not found',
+      });
+    }
+
+    return reply.send({
+      id: admin._id,
+      email: admin.email,
+      name: admin.name,
+      role: admin.role,
+    });
   } catch (error) {
     throw error;
   }
@@ -143,7 +233,7 @@ export const updateProfile = async (
         message: 'Not authenticated',
       });
     }
-    
+
     const admin = await authService.updateProfile(request.user.id, request.body);
     return reply.send(admin);
   } catch (error) {
@@ -169,10 +259,10 @@ export const changePassword = async (
         message: 'Not authenticated',
       });
     }
-    
+
     const { currentPassword, newPassword } = request.body;
     await authService.changePassword(request.user.id, currentPassword, newPassword);
-    
+
     return reply.send({ message: 'Password changed successfully' });
   } catch (error) {
     if ((error as Error).message.includes('incorrect')) {
