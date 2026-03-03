@@ -9,7 +9,7 @@ import {
   XMarkIcon,
   HomeIcon,
   CalendarIcon,
-  ToothIcon,
+  SparklesIcon,
   UserGroupIcon,
   ChatBubbleLeftIcon,
   DocumentTextIcon,
@@ -20,7 +20,7 @@ import {
 const navigation = [
   { name: 'Dashboard', href: '/admin/dashboard', icon: HomeIcon },
   { name: 'Записи', href: '/admin/appointments', icon: CalendarIcon },
-  { name: 'Послуги', href: '/admin/services', icon: ToothIcon },
+  { name: 'Послуги', href: '/admin/services', icon: SparklesIcon },
   { name: 'Лікарі', href: '/admin/doctors', icon: UserGroupIcon },
   { name: 'Відгуки', href: '/admin/reviews', icon: ChatBubbleLeftIcon },
   { name: 'Блог', href: '/admin/blog', icon: DocumentTextIcon },
