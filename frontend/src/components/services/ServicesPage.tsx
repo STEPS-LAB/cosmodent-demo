@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useLayoutEffect } from 'react';
+import { useEffect, useState, useLayoutEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { api } from '@/services/api';
 
@@ -34,7 +34,9 @@ export function ServicesPage() {
     });
   }, []);
 
-  const categories = ['all', ...Array.from(new Set(services.map((s) => s.category).filter(Boolean)))];
+  const categories = useMemo(() => 
+    ['all', ...Array.from(new Set(services.map((s) => s.category).filter(Boolean)))]
+  , [services]);
 
   // Обробка початкового hash при завантаженні послуг
   useEffect(() => {
@@ -104,7 +106,7 @@ export function ServicesPage() {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => setSelectedCategory(category || 'all')}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 selectedCategory === category
                   ? 'bg-primary-600 text-white'

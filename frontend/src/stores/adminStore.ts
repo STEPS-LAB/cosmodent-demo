@@ -45,7 +45,7 @@ export type AdminStoreState = AuthState & AuthActions;
 
 export const useAdminStore = create<AdminStoreState>()(
   persist(
-    (set, get) => ({
+    (set, _get) => ({
       // Initial state
       token: null,
       user: null,
